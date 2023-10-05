@@ -1,5 +1,14 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smartnote/views/screens/questions.dart';
+
+// Local imports
+import 'recorder.dart';
+import 'notes.dart';
+import 'question.dart';
+import 'upload.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -8,17 +17,23 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final PageController _pageController = PageController(initialPage: 0);
+  int _selectedIndex = 0;
+
+  static const List _widgetOptions = [
+    Recorder(),
+    Upload(),
+    Notes(),
+    Questions(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue, Color.fromRGBO(139,0,247, 1)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        color: Colors.black,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
           child: GNav(
@@ -26,11 +41,7 @@ class _HomeState extends State<Home> {
             activeColor: Colors.white,
             color: Colors.white,
             // add gradient color for the tab background
-            tabBackgroundGradient: LinearGradient(
-              colors: [Color.fromRGBO(139,0,247, 1,), Colors.blue, ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            tabBackgroundColor: Colors.grey.shade800,
             gap: 8,
             padding: EdgeInsets.all(16),
             tabs: [
@@ -40,7 +51,7 @@ class _HomeState extends State<Home> {
               ),
               GButton(
                 icon: Icons.file_upload,
-                text: 'Upload File',
+                text: 'Upload',
               ),
               GButton(
                 icon: Icons.note,
@@ -51,9 +62,22 @@ class _HomeState extends State<Home> {
                 text: 'Questions',
               ),
             ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              print(index);
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 }
