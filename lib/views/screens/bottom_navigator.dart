@@ -2,21 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:smartnote/views/screens/questions.dart';
+import 'package:smartnote/views/screens/question/questionsList.dart';
 
 // Local imports
-import 'recorder.dart';
-import 'notes.dart';
-import 'question.dart';
+import 'note/note.dart';
+import 'recorder/recorderScreen.dart';
+import 'note/notes.dart';
+import 'question/question.dart';
 import 'upload.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class BottomNavBarNavigator extends StatefulWidget {
+  const BottomNavBarNavigator({Key? key}) : super(key: key);
   @override
-  _HomeState createState() => _HomeState();
+  _BottomNavBarNavigatorState createState() => _BottomNavBarNavigatorState();
 }
 
-class _HomeState extends State<Home> {
+class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
   final PageController _pageController = PageController(initialPage: 0);
   int _selectedIndex = 0;
 
