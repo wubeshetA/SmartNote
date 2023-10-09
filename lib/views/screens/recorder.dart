@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:audiorecorder/audiorecorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-
-
 
 class Recorder extends StatefulWidget {
   @override
@@ -19,9 +16,11 @@ class _RecorderState extends State<Recorder> {
   _startRecording() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = appDocDir.path + '/' + DateTime.now().toString() + '.aac';
+      String filePath =
+          appDocDir.path + '/' + DateTime.now().toString() + '.aac';
       print('File path: $filePath');
-      _recording = await AudioRecorder.start(path: filePath, audioOutputFormat: AudioOutputFormat.AAC);
+      _recording = await AudioRecorder.start(
+          path: filePath, audioOutputFormat: AudioOutputFormat.AAC);
       setState(() {
         _filePath = filePath;
         isRecording = true;
