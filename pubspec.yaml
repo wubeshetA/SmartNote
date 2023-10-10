@@ -38,8 +38,11 @@ dependencies:
 
   webview_flutter: ^4.4.1
   flutter_webview_plugin: ^0.4.0
-  flutter_sound_lite: ^8.5.0  
+  flutter_sound_lite: ^8.5.0
   permission_handler: ^11.0.1
+  speech_to_text: ^6.3.0
+  flutter_material_pickers: ^3.6.0
+
 
 dev_dependencies:
   flutter_test:

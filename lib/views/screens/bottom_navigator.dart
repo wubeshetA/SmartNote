@@ -20,7 +20,6 @@ class BottomNavBarNavigator extends StatefulWidget {
 class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
   final PageController _pageController = PageController(initialPage: 0);
   int _selectedIndex = 0;
-
   static const List _widgetOptions = [
     Recorder(),
     Upload(),
