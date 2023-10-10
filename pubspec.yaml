@@ -42,6 +42,11 @@ dependencies:
   permission_handler: ^11.0.1
   speech_to_text: ^6.3.0
   flutter_material_pickers: ^3.6.0
+  avatar_glow: ^2.0.2
+  path_provider: ^2.1.1
+  flutter_dotenv: ^5.1.0
+  http: ^1.1.0
+  
 
 
 dev_dependencies:

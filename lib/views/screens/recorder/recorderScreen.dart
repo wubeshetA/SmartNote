@@ -1,36 +1,56 @@
-import 'package:flutter/material.dart';
-import 'package:smartnote/views/screens/recorder/record.dart';
 import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_sound_lite/flutter_sound.dart';
+import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
+import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+// import 'package:flutter_sound/public/flutter_sound_player.dart';
 
 class Recorder extends StatefulWidget {
+  // intialize constant constructor
   const Recorder({Key? key}) : super(key: key);
-
   @override
-  State<Recorder> createState() => _RecorderState();
+  _RecorderState createState() => _RecorderState();
 }
 
 class _RecorderState extends State<Recorder> {
-  final recorder = SoundRecorder();
+  FlutterSoundRecorder? _audioRecorder;
+  bool _isRecording = false;
+  bool _isPaused = false;
+  String? pathToRecorded;
+  Duration _duration = Duration();
+  Timer? _timer;
 
- late Timer _timer;
+  FlutterSoundPlayer? _player;
+
+  Future initPlayer() async {
+    _player = FlutterSoundPlayer();
+    await _player!.openAudioSession();
+  }
+
+  Future playAudio() async {
+    await _player!.startPlayer(fromURI: '$pathToRecorded');
+  }
+
+  Future stopAudio() async {
+    await _player!.stopPlayer();
+  }
+
   @override
   void initState() {
     super.initState();
-    recorder.init();
+    _audioRecorder = FlutterSoundRecorder();
+    _initAudioRecorder();
   }
 
-  @override
-  void dispose() {
-    recorder.dispose();
-    super.dispose();
+  Future<void> _initAudioRecorder() async {
+    await _audioRecorder!.openAudioSession();
   }
-
-  // =============Timer================
-
-  Duration _duration = Duration();
 
   void _startTimer() {
-    _duration = Duration();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         _duration += Duration(seconds: 1);
@@ -39,125 +59,150 @@ class _RecorderState extends State<Recorder> {
   }
 
   void _pauseTimer() {
-    setState(() {
-      _timer.cancel();
-    });
-    
+    _timer?.cancel();
   }
-  void resumeOrPauseTimer() {
-    if (_timer.isActive) {
-      _pauseTimer();
-    } else {
-      // imcrement the timer
-      _startTimer();
-
-    }
-  }
-
-
 
   void _resetTimer() {
-    
+    _timer?.cancel();
     setState(() {
       _duration = Duration();
     });
+  }
+
+
+
+  Future<void> _requestPermissions() async {
+    var status = await Permission.microphone.status;
+    if (status.isDenied) {
+      // Request microphone permission
+      Map<Permission, PermissionStatus> statuses = await [
+        Permission.microphone,
+        Permission.storage,
+      ].request();
+      print(statuses[Permission.microphone]);
+    }
+  }
+
+  Future<void> _startRecording() async {
+    await _requestPermissions();
+    Directory tempDir = await getApplicationDocumentsDirectory();
+    print(
+        '=============$tempDir====================${tempDir.path}=============================================');
+    pathToRecorded = '${tempDir.path}/smartnotes_audio.mp3';
+
+    await _audioRecorder!.startRecorder(
+      toFile: pathToRecorded,
+      // decode it to mp3
+      codec: Codec.mp3,
+    );
+
+    setState(() {
+      _isRecording = true;
+    });
+
+    _startTimer();
+  }
+
+  Future<void> _pauseRecording() async {
+    await _audioRecorder!.pauseRecorder();
     _pauseTimer();
+
+    setState(() {
+      _isPaused = true;
+    });
+  }
+
+  Future<void> _resumeRecording() async {
+    await _audioRecorder!.resumeRecorder();
+    _startTimer();
+
+    setState(() {
+      _isPaused = false;
+    });
+  }
+
+  Future<void> _stopRecording() async {
+    await _audioRecorder!.stopRecorder();
+    _resetTimer();
+
+    setState(() {
+      _isRecording = false;
+      _isPaused = false;
+    });
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Center(
-          child: Column(
+  void dispose() {
+    _audioRecorder!.closeAudioSession();
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            '${_duration.inMinutes}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
+            style: TextStyle(fontSize: 24),
+          ),
+          SizedBox(height: 20),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '${_duration.inMinutes}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                style: TextStyle(fontSize: 24),
+              ElevatedButton(
+                onPressed: _isRecording && !_isPaused
+                    ? _pauseRecording
+                    : _resumeRecording,
+                child: Text(_isPaused ? 'Resume' : 'Pause'),
               ),
-              SizedBox(height: 20),
-              buildPlayers(),
+              SizedBox(width: 10),
+              GestureDetector(
+                onTap: !_isRecording ? _startRecording : null,
+                child: CircleAvatar(
+                  backgroundColor: Colors.red,
+                  radius: 30,
+                  child: Icon(Icons.mic, color: Colors.white, size: 30),
+                ),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: _isRecording ? _stopRecording : null,
+                child: Text('Stop'),
+              ),
             ],
           ),
-        ),
-      );
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _isRecording
+                ? null
+                : () {
+                    // save the recorded audio
 
-  Widget buildPlayers() {
-    final isRecording = recorder.isRecording;
-
-    final icon = isRecording ? Icons.stop : Icons.mic;
-    final text = isRecording ? 'Stop' : 'Start';
-    final primary = isRecording ? Colors.red : Colors.white;
-    final onPrimary = isRecording ? Colors.white : Colors.black;
-
-    return Container(
-      // set the wideth of the container to the width of the screen
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
-          // add a button to pause recording and resume recording
-
-          IgnorePointer(
-            ignoring: !recorder.isRecording,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(175, 50),
-               
-              ),
-              onPressed: () async {
-                await recorder.togglePauseAndResume();
-               
-                  if (recorder.isRecording) {
-                    _pauseTimer();
-                  } else {
-                    _startTimer();
-                  }
-              
-              },
-              icon: Icon(recorder.isRecording? Icons.pause : Icons.play_arrow),
-              label: Text(''),
-            ),
+                    print('Audio saved at $pathToRecorded');
+                  },
+            child: Text('Save'),
           ),
-
-          SizedBox(width: 5),
-          ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(175, 50),
-                primary: primary,
-                onPrimary: onPrimary,
-              ),
-              onPressed: () async {
-                await recorder.toggleStartAndStop();
-                print('isRecording: ${recorder.isRecording}');
-                setState(() {
-                  if (recorder.isRecording) {
-                    _startTimer();
-                  }
-                });
-              },
-              icon: Icon(icon),
-              label: Text(text)),
-          SizedBox(width: 5),
-
-          // Add a button to reset the timer
-          IgnorePointer(
-            ignoring: !recorder.isRecording,
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(175, 50),
-              
-              ),
-              onPressed: () async {
-                await recorder.toggleStartAndStop();
-                print('isRecording: ${recorder.isRecording}');
-                setState(() {
-                  if (recorder.isRecording) {
-                    _resetTimer();
-                  }
-                });
-              },
-              icon: Icon(Icons.replay),
-              label: Text(''),
-            ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () async {
+              await initPlayer();
+              await playAudio();
+            },
+            child: Text('Play'),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () async {
+              await stopAudio();
+            },
+            child: Text('Stop'),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Generate Short Notes'),
           ),
         ],
       ),
