@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:smartnote/views/screens/question/questionsList.dart';
+import 'package:smartnote/views/question/questionsList.dart';
 
 // Local imports
 import 'note/note.dart';
