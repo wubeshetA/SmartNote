@@ -7,9 +7,9 @@ import 'package:google_speech/google_speech.dart';
 Future<String> transcribeAudio(String fileName) async {
   // Load audio
 
-  print("=============Inside the transcription=========$fileName===========");
+  // print("=============Inside the transcription=========$fileName===========");
   final audio = File(fileName).readAsBytesSync().toList();
-  print("=============Inside the transcription=========$audio===========");
+  // print("=============Inside the transcription=========$audio===========");
   final config = RecognitionConfig(
       encoding: AudioEncoding.LINEAR16,
       model: RecognitionModel.basic,
@@ -32,7 +32,7 @@ Future<String> transcribeAudio(String fileName) async {
   final trascribedText = response.results
       .map((result) => result.alternatives.first.transcript)
       .join('\n');
-  print("===================Transcribed Text====================");
+  // print("===================Transcribed Text====================");
   print(trascribedText);
   
   return trascribedText;

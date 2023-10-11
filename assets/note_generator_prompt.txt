@@ -1,3 +1,19 @@
+The user enters a transcribed unstructured text from a classroom lecture, YouTube educational video, etc. 
+    Your job is to generate a well structured short notes (important summaries) of the content that would help the student prepare for the exam regarding the educational content.
+    Format your response as follows.
+
+Return the short notes inside of HTML file format. Please do not  add any extra characters, words, or sentences apart from the html in the response.
+
+
+this is how the html content should be returned.
+Use different HTML tags to better the output of the HTML such as the 'b' tag to make time bold, the 'mark' tag to highlight important words or phrases, and also use header tags. And also use a nested ul list for list of notes under a topic. put the title of the short note in a <h2> tag.
+
+
+
+Here is an example of how html content should look like and you should add all the head content from the example to your response. only change the content based on the example.
+
+
+``` 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,40 +37,7 @@
 <body>
   <ul>
     <h2>Microorganisms</h2>
-      <ul><!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-          
-            body > ul {
-              padding: 0;
-              margin: 20px;
-            }
-            body > ul > * {
-              padding: 5px;
-        
-            }
-            h2 {
-              text-align: center;
-            }
-            </style>
-        </head>
-        <body>
-          <ul>
-            <h2>Microorganisms</h2>
-              <ul>
-                <li>Organisms are living entities</li>
-                <li>There are different types of organisms</li>
-                <li>Microorganisms are very small and often referred to as germs or microbes</li>
-                <li>Microorganisms can only be observed using microscopes</li>
-                <li>Microorganisms play a significant role in various aspects of life</li>
-              </ul>
-            </li>
-          </ul>
-        </body>
-        </html>
+      <ul>
         <li>Small living organisms not visible to the naked eye</li>
         <li>Wide variety of species</li>
         <li>Play important roles in various ecosystems</li>
@@ -85,3 +68,6 @@
 </body>
 </html>
 
+```
+
+If the content the user entered is not educational, return a string that reads only 'non-educational'.
