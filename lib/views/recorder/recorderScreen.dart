@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 
@@ -123,7 +124,9 @@ class _RecorderState extends State<Recorder> {
   }
 
   Future<void> _stopRecording() async {
+    _audioRecorder!.pauseRecorder();
     await _audioRecorder!.stopRecorder();
+
     _resetTimer();
 
     setState(() {
@@ -156,109 +159,206 @@ class _RecorderState extends State<Recorder> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.values[4],
-        children: [
-          Container(),
-
-          Container(),
-
-          // Text(transcribedText ?? 'No text found'),
-          // SizedBox(height: 20),
-          Text(
-            '${_duration.inHours}:${(_duration.inMinutes % 60).toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
-            style: TextStyle(fontSize: 24),
-          ),
-          SizedBox(height: 15),
-          // add a text widget containing a red icon the text 'Recording...' when recorder start
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            _isRecording
-                ? Icon(
-                    // add circular dot icon
-                    Icons.circle,
-                    color: Colors.red,
-                  )
-                : Container(),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              _isRecording ? 'Recording...' : '',
-              style: TextStyle(
-                // color: Colors.red,
-                fontSize: 20,
-              ),
-            ),
-          ]),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: _isRecording && !_isPaused
-                    ? _pauseRecording
-                    : _resumeRecording,
-                child: Text(_isPaused ? 'Resume' : 'Pause'),
-              ),
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: !_isRecording ? _startRecording : null,
-                child: CircleAvatar(
-                  backgroundColor: Colors.red,
-                  radius: 30,
-                  child: Icon(Icons.mic, color: Colors.white, size: 30),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 32, 8, 24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              child: Column(children: [
+                // SizedBox(height: 25),
+                Text(
+                  '${_duration.inHours}:${(_duration.inMinutes % 60).toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
+                  style: TextStyle(fontSize: 32),
                 ),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: _isRecording ? _stopRecording : null,
-                child: Text('Stop'),
-              ),
-            ],
-          ),
+                SizedBox(height: 15),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  _isRecording
+                      ? Icon(
+                          // add circular dot icon
+                          Icons.circle,
+                          color: Colors.red,
+                        )
+                      : Container(),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    _isRecording ? 'Recording...' : '',
+                    style: TextStyle(
+                      // color: Colors.red,
+                      fontSize: 20,
+                    ),
+                  ),
+                ]),
+              ]),
+            ),
 
-          // Button to save the recording
-          // SizedBox(height: 20),
-          // ElevatedButton(
-          //   onPressed: _isRecording
-          //       ? null
-          //       : () {
-          //           // save the recorded audio
+            Container(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // =================Recorder Area=================
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        // suround the following widgets with a container
 
-          //           print('Audio saved at $pathToRecorded');
-          //         },
-          //   child: Text('Save'),
-          // ),
+                        _isRecording
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  // add elevation
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: bgColor.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: textColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: IconButton(
+                                  onPressed: _isRecording && !_isPaused
+                                      ? _pauseRecording
+                                      : _resumeRecording,
+                                  icon: Icon(
+                                    _isPaused ? Icons.play_arrow : Icons.pause,
+                                    color: bgColor,
+                                    size: 30,
+                                  ),
+                                  // child: Text(_isPaused ? 'Resume' : 'Pause'),
+                                ),
+                              )
+                            : Container(),
 
-          // Button to play the recording
-          // SizedBox(height: 20),
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     await initPlayer();
-          //     await playAudio();
-          //   },
-          //   child: Text('Play'),
-          // ),
+                        // SizedBox(width: 10),
 
-          // SizedBox(height: 20),
-          // ElevatedButton(
-          //   onPressed: () async {
-          //     await stopAudio();
-          //   },
-          //   child: Text('Stop'),
-          // ),
+                        GestureDetector(
+                          onTap: !_isRecording ? _startRecording : null,
+                          child: AvatarGlow(
+                            animate: !_isPaused && _isRecording,
+                            glowColor: bgColor,
+                            endRadius: 100.0, // Adjust the glow size
+                            duration: Duration(milliseconds: 2000),
+                            repeatPauseDuration: Duration(milliseconds: 100),
+                            repeat: true,
+                            child: CircleAvatar(
+                              backgroundColor: bgColor,
+                              radius: 60, // Increase the avatar radius
+                              child: Icon(Icons.mic,
+                                  color: Colors.white,
+                                  size: 60), // Increase the icon size
+                            ),
+                          ),
+                        ),
 
-          ElevatedButton(
-            onPressed: () {
-              transcribeAudio(pathToRecorded!).then((value) async {
-                String generatedNote = await generateNote(value);
-                setState(() {
-                  transcribedText = generatedNote;
-                });
-              });
-            },
-            child: Text('Generate Short Note'),
-          ),
-        ],
+                        // SizedBox(width: 10),
+
+                        _isRecording
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  // add elevation
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: bgColor.withOpacity(0.5),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: textColor,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: IconButton(
+                                  onPressed:
+                                      _isRecording ? _stopRecording : null,
+                                  icon: Icon(
+                                    Icons.stop,
+                                    color: bgColor,
+                                    size: 30,
+                                  ),
+                                ),
+                              )
+                            : Container()
+
+                        // ElevatedButton(
+                        //   onPressed: _isRecording ? _stopRecording : null,
+                        //   child: Text('Stop'),
+                        // ),
+                      ],
+                    ),
+
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // ======================= Generate Note ================
+
+                    ElevatedButton(
+                      // Add decoration
+                      style: ElevatedButton.styleFrom(
+                        // set with of 80% of it's container
+                        minimumSize: Size(300, 50),
+                        maximumSize: Size(600, 100),
+                        foregroundColor: textColor,
+                        backgroundColor: bgColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                      ),
+                      onPressed: () {
+                        transcribeAudio(pathToRecorded!).then((value) async {
+                          String generatedNote = await generateNote(value);
+                          setState(() {
+                            transcribedText = generatedNote;
+                          });
+                        });
+                      },
+                      child: Text('Generate Short Note'),
+                    ),
+                  ]),
+            ),
+
+            // Text(transcribedText ?? 'No text found'),
+            // SizedBox(height: 20),
+
+            // add a text widget containing a red icon the text 'Recording...' when recorder start
+
+            // Button to save the recording
+            // SizedBox(height: 20),
+            // ElevatedButton(
+            //   onPressed: _isRecording
+            //       ? null
+            //       : () {
+            //           // save the recorded audio
+
+            //           print('Audio saved at $pathToRecorded');
+            //         },
+            //   child: Text('Save'),
+            // ),
+
+            // Button to play the recording
+            // SizedBox(height: 20),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     await initPlayer();
+            //     await playAudio();
+            //   },
+            //   child: Text('Play'),
+            // ),
+
+            // SizedBox(height: 20),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     await stopAudio();
+            //   },
+            //   child: Text('Stop'),
+            // ),
+          ],
+        ),
       ),
     );
   }
