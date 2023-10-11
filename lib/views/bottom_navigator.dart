@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/questionsList.dart';
 
 // Local imports
@@ -33,17 +34,17 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: Colors.black,
+        color: bgColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
             backgroundColor: Colors.transparent,
             activeColor: Colors.white,
             color: Colors.white,
             // add gradient color for the tab background
-            tabBackgroundColor: Colors.grey.shade800,
+            tabBackgroundColor: lighterBgColor,
             gap: 8,
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(10),
             tabs: [
               GButton(
                 icon: Icons.mic,

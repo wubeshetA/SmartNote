@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
-import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
+
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeai.dart';
 import 'package:smartnote/services/transcribe.dart';
 // import 'package:flutter_sound/public/flutter_sound_player.dart';
@@ -141,17 +141,55 @@ class _RecorderState extends State<Recorder> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+    return Scaffold(
+      appBar: AppBar(
+        // title: Text('Recorder'),
+        title: Text('Record'),
+        centerTitle: true,
+        backgroundColor: bgColor,
+        elevation: 0.0,
+        // add a sign in button on the right side
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.login),
+          ),
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.values[4],
         children: [
-          Text(transcribedText ?? 'No text found'),
-          SizedBox(height: 20),
+          Container(),
+
+          Container(),
+
+          // Text(transcribedText ?? 'No text found'),
+          // SizedBox(height: 20),
           Text(
-            '${_duration.inMinutes}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
+            '${_duration.inHours}:${(_duration.inMinutes % 60).toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
             style: TextStyle(fontSize: 24),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
+          // add a text widget containing a red icon the text 'Recording...' when recorder start
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            _isRecording
+                ? Icon(
+                    // add circular dot icon
+                    Icons.circle,
+                    color: Colors.red,
+                  )
+                : Container(),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              _isRecording ? 'Recording...' : '',
+              style: TextStyle(
+                // color: Colors.red,
+                fontSize: 20,
+              ),
+            ),
+          ]),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -177,44 +215,48 @@ class _RecorderState extends State<Recorder> {
               ),
             ],
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _isRecording
-                ? null
-                : () {
-                    // save the recorded audio
 
-                    print('Audio saved at $pathToRecorded');
-                  },
-            child: Text('Save'),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () async {
-              await initPlayer();
-              await playAudio();
-            },
-            child: Text('Play'),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () async {
-              await stopAudio();
-            },
-            child: Text('Stop'),
-          ),
+          // Button to save the recording
+          // SizedBox(height: 20),
+          // ElevatedButton(
+          //   onPressed: _isRecording
+          //       ? null
+          //       : () {
+          //           // save the recorded audio
+
+          //           print('Audio saved at $pathToRecorded');
+          //         },
+          //   child: Text('Save'),
+          // ),
+
+          // Button to play the recording
+          // SizedBox(height: 20),
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     await initPlayer();
+          //     await playAudio();
+          //   },
+          //   child: Text('Play'),
+          // ),
+
+          // SizedBox(height: 20),
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     await stopAudio();
+          //   },
+          //   child: Text('Stop'),
+          // ),
+
           ElevatedButton(
             onPressed: () {
-              transcribeAudio(pathToRecorded!).then((value)  async {
-               
-                  String generatedNote = await generateNote(value);
-                  setState(() {
-                    transcribedText = generatedNote;
-                  });
-              
+              transcribeAudio(pathToRecorded!).then((value) async {
+                String generatedNote = await generateNote(value);
+                setState(() {
+                  transcribedText = generatedNote;
+                });
               });
             },
-            child: Text('Generate Short Notes'),
+            child: Text('Generate Short Note'),
           ),
         ],
       ),
