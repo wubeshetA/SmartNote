@@ -7,6 +7,7 @@ import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smartnote/services/generativeai.dart';
 import 'package:smartnote/services/transcribe.dart';
 // import 'package:flutter_sound/public/flutter_sound_player.dart';
 
@@ -70,8 +71,6 @@ class _RecorderState extends State<Recorder> {
       _duration = Duration();
     });
   }
-
-
 
   Future<void> _requestPermissions() async {
     var status = await Permission.microphone.status;
@@ -206,10 +205,13 @@ class _RecorderState extends State<Recorder> {
           ),
           ElevatedButton(
             onPressed: () {
-              transcribeAudio(pathToRecorded!).then((value) {
-                setState(() {
-                  transcribedText = value;
-                });
+              transcribeAudio(pathToRecorded!).then((value)  async {
+               
+                  String generatedNote = await generateNote(value);
+                  setState(() {
+                    transcribedText = generatedNote;
+                  });
+              
               });
             },
             child: Text('Generate Short Notes'),

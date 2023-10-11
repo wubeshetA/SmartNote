@@ -17,7 +17,7 @@ class _NotesState extends State<Notes> {
         onPressed: () {
           Navigator.of(context).pushNamed('/note');
         },
-        child: Text('Go to WebView'),
+        child: Text('Note View'),
       )
     );
   }

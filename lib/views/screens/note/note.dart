@@ -33,40 +33,7 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
 <body>
   <ul>
     <h2>Microorganisms</h2>
-      <ul><!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-          
-            body > ul {
-              padding: 0;
-              margin: 20px;
-            }
-            body > ul > * {
-              padding: 5px;
-        
-            }
-            h2 {
-              text-align: center;
-            }
-            </style>
-        </head>
-        <body>
-          <ul>
-            <h2>Microorganisms</h2>
-              <ul>
-                <li>Organisms are living entities</li>
-                <li>There are different types of organisms</li>
-                <li>Microorganisms are very small and often referred to as germs or microbes</li>
-                <li>Microorganisms can only be observed using microscopes</li>
-                <li>Microorganisms play a significant role in various aspects of life</li>
-              </ul>
-            </li>
-          </ul>
-        </body>
-        </html>
+      <ul>
         <li>Small living organisms not visible to the naked eye</li>
         <li>Wide variety of species</li>
         <li>Play important roles in various ecosystems</li>
@@ -96,7 +63,6 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
         
 </body>
 </html>
-
 
         
   ''';

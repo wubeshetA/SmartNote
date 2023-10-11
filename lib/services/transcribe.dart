@@ -15,7 +15,9 @@ Future<String> transcribeAudio(String fileName) async {
       model: RecognitionModel.basic,
       enableAutomaticPunctuation: true,
       sampleRateHertz: 16000,
-      languageCode: 'en-US');
+      languageCode: 'en-US'
+      
+      );
 
   final serviceAccount = ServiceAccount.fromString(
       '${(await rootBundle.loadString('assets/speech_to_text.json'))}');
