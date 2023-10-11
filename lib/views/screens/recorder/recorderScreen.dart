@@ -7,6 +7,7 @@ import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:flutter_sound_lite/public/flutter_sound_player.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smartnote/services/transcribe.dart';
 // import 'package:flutter_sound/public/flutter_sound_player.dart';
 
 class Recorder extends StatefulWidget {
@@ -24,6 +25,7 @@ class _RecorderState extends State<Recorder> {
   Duration _duration = Duration();
   Timer? _timer;
 
+  String transcribedText = 'No trascription yet...';
   FlutterSoundPlayer? _player;
 
   Future initPlayer() async {
@@ -88,12 +90,12 @@ class _RecorderState extends State<Recorder> {
     Directory tempDir = await getApplicationDocumentsDirectory();
     print(
         '=============$tempDir====================${tempDir.path}=============================================');
-    pathToRecorded = '${tempDir.path}/smartnotes_audio.mp3';
+    pathToRecorded = '${tempDir.path}/smartnotes_audio.wav';
 
     await _audioRecorder!.startRecorder(
       toFile: pathToRecorded,
       // decode it to mp3
-      codec: Codec.mp3,
+      // codec: Codec.mp3,
     );
 
     setState(() {
@@ -144,6 +146,8 @@ class _RecorderState extends State<Recorder> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Text(transcribedText ?? 'No text found'),
+          SizedBox(height: 20),
           Text(
             '${_duration.inMinutes}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
             style: TextStyle(fontSize: 24),
@@ -201,7 +205,13 @@ class _RecorderState extends State<Recorder> {
             child: Text('Stop'),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              transcribeAudio(pathToRecorded!).then((value) {
+                setState(() {
+                  transcribedText = value;
+                });
+              });
+            },
             child: Text('Generate Short Notes'),
           ),
         ],

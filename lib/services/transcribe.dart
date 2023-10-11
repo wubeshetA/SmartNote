@@ -1,23 +1,40 @@
-
+import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
+import 'package:google_speech/google_speech.dart';
 
-class OpenAI {
-  final String apiKey = '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';
+// Transcribe the audio file to text using Google Speech-to-Text
+Future<String> transcribeAudio(String fileName) async {
+  // Load audio
 
-  Future<String> transcribeAudio(String audioFilePath) async {
-    var request = http.MultipartRequest('POST', Uri.parse('https://api.openai.com/v1/engines/whisper-1/transcriptions'));
-    request.headers.addAll({
-      'Authorization': 'Bearer $apiKey',
-      'Content-Type': 'multipart/form-data',
-    });
-    request.files.add(await http.MultipartFile.fromPath('audio', audioFilePath));
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      var result = await http.Response.fromStream(response);
-      return result.body;
-    } else {
-      throw Exception('Failed to transcribe audio');
-    }
-  }
+  print("=============Inside the transcription=========$fileName===========");
+  final audio = File(fileName).readAsBytesSync().toList();
+  print("=============Inside the transcription=========$audio===========");
+  final config = RecognitionConfig(
+      encoding: AudioEncoding.LINEAR16,
+      model: RecognitionModel.basic,
+      enableAutomaticPunctuation: true,
+      sampleRateHertz: 16000,
+      languageCode: 'en-US');
+
+  final serviceAccount = ServiceAccount.fromString(
+      '${(await rootBundle.loadString('assets/speech_to_text.json'))}');
+  // Load service account credentials from assets
+
+  // Create speech client
+  final speechToText = SpeechToText.viaServiceAccount(serviceAccount);
+
+  // Recognize speech
+  final response = await speechToText.recognize(config, audio).onError(
+      (error, stackTrace) => throw Exception('Error while transcibing audio'));
+
+  // Return transcribed text
+  final trascribedText = response.results
+      .map((result) => result.alternatives.first.transcript)
+      .join('\n');
+  print("===================Transcribed Text====================");
+  print(trascribedText);
+  
+  return trascribedText;
+
 }
