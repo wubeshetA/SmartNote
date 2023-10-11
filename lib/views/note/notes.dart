@@ -15,9 +15,9 @@ class _NotesState extends State<Notes> {
       // create a button that will redirect to the webview widget
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/note');
+          Navigator.of(context).pushNamed('/note'); 
         },
-        child: Text('Go to WebView'),
+        child: Text('Note View'),
       )
     );
   }

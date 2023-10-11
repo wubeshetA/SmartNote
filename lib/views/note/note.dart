@@ -15,19 +15,33 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <style>
+  
+    body > ul {
+      padding: 0;
+      margin: 20px;
+    }
+    body > ul > * {
+      padding: 5px;
+
+    }
+    h2 {
+      text-align: center;
+    }
+    </style>
 </head>
 <body>
   <ul>
-    <li><b>Microorganisms:</b>
+    <h2>Microorganisms</h2>
       <ul>
         <li>Small living organisms not visible to the naked eye</li>
         <li>Wide variety of species</li>
-        <li>Play important roles in various ecosystems which in tern is very important for us. This is just a random text with to test lengthy paragraph. Play important roles in various ecosystems which in tern is very important for us. This is just a random text with to test lengthy paragraph.</li>
+        <li>Play important roles in various ecosystems</li>
       </ul>
     </li>
-    <li><b>Types:</b>
+    
       <ul>
+        <h3><u>Types:</u></h3>
         <li>Bacteria:</li>
         <ul>
           <li>Single-celled prokaryotes</li>
@@ -38,7 +52,7 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
         <ul>
           <li>Obligate <mark>intracellular</mark> parasites</li>
           <li>Consist of genetic material enclosed in a protein coat</li>
-          <li>Cannot reproduce without a host</li>
+          <li><mark>Cannot reproduce</mark> without a host</li>
         </ul>
         <li>Fungi:</li>
         <ul>
@@ -46,43 +60,9 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
           <li>Obtain nutrients by absorbing them from their environment</li>
           <li>Include yeasts, molds, and mushrooms</li>
         </ul>
-        <ul>
-    <li><b>Microorganisms:</b>
-      <ul>
-        <li>Small living organisms not visible to the naked eye</li>
-        <li>Wide variety of species</li>
-        <li>Play important roles in various ecosystems which in tern is very important for us. This is just a random text with to test lengthy paragraph. Play important roles in various ecosystems which in tern is very important for us. This is just a random text with to test lengthy paragraph.</li>
-      </ul>
-    </li>
-    <li><b>Types:</b>
-      <ul>
-        <li>Bacteria:</li>
-        <ul>
-          <li>Single-celled prokaryotes</li>
-          <li>Found virtually everywhere on Earth</li>
-          <li>Some species can be harmful (pathogenic bacteria)</li>
-        </ul>
-        <li>Viruses:</li>
-        <ul>
-          <li>Obligate <mark>intracellular</mark> parasites</li>
-          <li>Consist of genetic material enclosed in a protein coat</li>
-          <li>Cannot reproduce without a host</li>
-        </ul>
-        <li>Fungi:</li>
-        <ul>
-          <li>Eukaryotic organisms</li>
-          <li>Obtain nutrients by absorbing them from their environment</li>
-          <li>Include yeasts, molds, and mushrooms</li>
-        </ul>
-        </ul>
-        </ul>
-        
-        
         
 </body>
 </html>
-
-
 
         
   ''';
