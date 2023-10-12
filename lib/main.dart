@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/localStorage.dart';
+import 'package:smartnote/services/storage/localStorage.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'views/bottom_navigator.dart';
 import 'views/note/note.dart';

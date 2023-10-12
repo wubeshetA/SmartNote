@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/localStorage.dart';
+import 'package:smartnote/services/storage/localStorage.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 

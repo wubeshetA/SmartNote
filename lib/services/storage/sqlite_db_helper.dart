@@ -63,27 +63,44 @@ class SqliteDatabaseHelper {
   }
 }
 
-
 // examples on how to use the above functions
 
 // void main() async {
 //   var dbHelper = SqliteDatabaseHelper();
 
-//   // Insert data
+// //   // Insert data
 //   var id = await dbHelper.insertPath({
 //     'notes': 'Note 1',
 //     'questions': 'Question 1',
 //     'title': 'Title 1',
 //   });
 
-// //   // Delete data
-// //   // var rowsDeleted = await dbHelper.deletePath(id);
+//   // response exmpale for inserPath method
+//   const all_data = [
+//     {
+//       'id': 1,
+//       'notes': 'path_to_note_1_location.html', // html file
+//       'questions': 'file_path_to_questions_for_this_note.json', // json file
+//       'title': 'title of the shortnote',
+//       'created_at': 'date time'
+//     },
+//     {
+//       'id': 2,
+//       'notes': 'path_to_note_2_location.html', // html file
+//       'questions': 'file_path_to_questions_for_this_note.json', // json file
+//       'title': 'title of the shortnote',
+//       'created_at': 'date time'
+//     },
+//   ];
+
+//   // Delete data
+//   // var rowsDeleted = await dbHelper.deletePath(id);
 
 // //   // Get all paths
 //   var paths = await dbHelper.getPaths();
 //   // iterate over the list and print each path
 //   paths.forEach((path) {
 //     // call the read file function for each path
-//     // both question and 
+//     // both question and
 //   });
 // }
