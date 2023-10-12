@@ -32,7 +32,9 @@ class SqliteDatabaseHelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         notes TEXT NOT NULL,
         questions TEXT NOT NULL,
-        title TEXT NOT NULL
+        title TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
       )
     ''');
   }

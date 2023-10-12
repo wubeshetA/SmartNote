@@ -4,14 +4,13 @@ import 'dart:io';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:smartnote/services/localStorage.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeai.dart';
 import 'package:smartnote/services/transcribe.dart';
-// import 'package:flutter_sound/public/flutter_sound_player.dart';
+
 
 class Recorder extends StatefulWidget {
   // intialize constant constructor
