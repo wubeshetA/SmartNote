@@ -1,5 +1,6 @@
 // Create a stateful widget that can just display helloworld
 import 'package:flutter/material.dart';
+import 'package:smartnote/views/screens/question/question.dart';
 
 class Questions extends StatefulWidget {
   const Questions({Key? key}) : super(key: key);
@@ -21,7 +22,10 @@ class _QuestionsState extends State<Questions> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('ListView Navigation'),
+          title: const Text(
+            'Questions',
+          ),
+          backgroundColor: Color.fromARGB(255, 246, 244, 244),
           centerTitle: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -30,6 +34,7 @@ class _QuestionsState extends State<Questions> {
           actions: [
             CircleAvatar(
               // Replace with your image or use a placeholder
+
               radius: 20,
             ),
             SizedBox(width: 15),
@@ -39,15 +44,22 @@ class _QuestionsState extends State<Questions> {
           itemCount: notes.length,
           itemBuilder: (context, index) {
             final note = notes[index];
-            return Card(
-              child: ExpansionTile(
-                title: Text(note.title),
-                subtitle: Text(note.date.toString()),
-                trailing: Icon(Icons.question_answer_outlined),
+            return InkWell(
+              onTap: () {
+                // Push to a new screen or redirect as needed
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => QuestionView()));
+              },
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text('Dummy text for ${note.title}.'),
+                  Expanded(
+                    child: Card(
+                      child: ListTile(
+                        title: Text(note.title),
+                        subtitle: Text(note.date.toString()),
+                        trailing: Icon(Icons.question_answer_outlined),
+                      ),
+                    ),
                   ),
                 ],
               ),
