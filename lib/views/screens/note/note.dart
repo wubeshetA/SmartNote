@@ -95,7 +95,17 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        title: const Text(
+          'Notes',
+        ),
+        backgroundColor: Color.fromARGB(221, 246, 244, 244),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
       body: WebViewWidget(controller: controller),
     );
   }

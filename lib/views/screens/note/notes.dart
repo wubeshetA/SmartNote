@@ -1,5 +1,7 @@
 // Create a stateful widget that can just display helloworld
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'note.dart';
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -22,7 +24,7 @@ class _NotesState extends State<Notes> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Questions',
+            'Notes',
           ),
           backgroundColor: Color.fromARGB(221, 246, 244, 244),
           centerTitle: true,
@@ -49,7 +51,7 @@ class _NotesState extends State<Notes> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetailScreen(note: note)));
+                        builder: (context) => NoteWebViewContainer()));
               },
               child: Row(
                 children: [
