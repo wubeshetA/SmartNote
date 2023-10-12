@@ -1,26 +1,25 @@
 import 'package:flutter_sound_lite/public/flutter_sound_recorder.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'recorderScreen.dart';
+import 'dart:async';
 
 final pathToSaveAudio = 'audio_example.aac';
 
 class SoundRecorder {
   FlutterSoundRecorder? _audioRecorder;
   bool _isRecorderInitialized = false;
-  bool get isRecording => _audioRecorder!.isRecording ?? false;
+  bool get isRecording => _audioRecorder!.isRecording;
 
   /// Initializes the audio recorder and requests microphone permission.
   Future init() async {
     _audioRecorder = FlutterSoundRecorder();
 
-    print('trying to get permission');
     final status = await Permission.microphone.request();
-    print("reached here");
-    // if (status != PermissionStatus.granted) {
-    //   print('could not get microphone permission');
-    //   throw RecordingPermissionException('Microphone permission not granted');
-    // }
-    print("passed the if statement");
+
+    if (status != PermissionStatus.granted) {
+      print('could not get microphone permission');
+      throw RecordingPermissionException('Microphone permission not granted');
+    }
 
     await _audioRecorder!.openAudioSession();
     _isRecorderInitialized = true;
@@ -48,13 +47,32 @@ class SoundRecorder {
 
     await _audioRecorder!.stopRecorder();
   }
+  Future _pause() async {
+    if (!_isRecorderInitialized) return;
+
+    await _audioRecorder!.pauseRecorder();
+  }
+
+  Future _resume() async {
+    if (!_isRecorderInitialized) return;
+
+    await _audioRecorder!.resumeRecorder();
+  }
 
   /// Toggles between starting and stopping the audio recorder.
-  Future<bool> toggleRecording() async {
+  Future<bool> toggleStartAndStop() async {
     if (_audioRecorder!.isStopped) {
       await _record();
     } else {
       await _stop();
+    }
+    return isRecording;
+  }
+  Future<bool> togglePauseAndResume() async {
+    if (_audioRecorder!.isPaused) {
+      await _resume();
+    } else {
+      await _pause();
     }
     return isRecording;
   }

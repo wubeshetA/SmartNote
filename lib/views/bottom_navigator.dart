@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/questionsList.dart';
 
 // Local imports
@@ -20,7 +21,6 @@ class BottomNavBarNavigator extends StatefulWidget {
 class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
   final PageController _pageController = PageController(initialPage: 0);
   int _selectedIndex = 0;
-
   static const List _widgetOptions = [
     Recorder(),
     Upload(),
@@ -34,37 +34,33 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: bgColor,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.transparent,
             activeColor: Colors.white,
             color: Colors.white,
             // add gradient color for the tab background
-            tabBackgroundColor: Colors.greenAccent,
+            tabBackgroundColor: lighterBgColor,
             gap: 8,
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(10),
             tabs: [
               GButton(
                 icon: Icons.mic,
                 text: 'Record',
-                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
               GButton(
                 icon: Icons.file_upload,
                 text: 'Upload',
-                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
               GButton(
                 icon: Icons.note,
                 text: 'Notes',
-                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
               GButton(
                 icon: Icons.question_answer,
                 text: 'Questions',
-                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
             ],
             selectedIndex: _selectedIndex,

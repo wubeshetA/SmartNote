@@ -78,12 +78,8 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
         </ul>
         
         
-        
 </body>
 </html>
-
-
-
         
   ''';
   // WebView.platform = SurfaceAndroidWebView();
