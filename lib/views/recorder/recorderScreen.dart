@@ -7,6 +7,7 @@ import 'package:flutter_sound_lite/flutter_sound.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:smartnote/services/localStorage.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeai.dart';
 import 'package:smartnote/services/transcribe.dart';
@@ -311,13 +312,20 @@ class _RecorderState extends State<Recorder> {
                       ),
                       onPressed: () {
                         transcribeAudio(pathToRecorded!).then((value) async {
-                          String generatedNote = await generateNote(value);
-                          setState(() {
-                            transcribedText = generatedNote;
-                          });
+                          String gptResponseText = await generateNote(value);
+                          saveNoteAndQuestion(gptResponseText);
+                          // setState(() {
+                          //   transcribedText = gptResponseText;
+                          // });
                         });
                       },
-                      child: Text('Generate Short Note'),
+                      child: Text(
+                        'Generate Short Note',
+                        style: TextStyle(
+                          // give it a font size
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
                   ]),
             ),

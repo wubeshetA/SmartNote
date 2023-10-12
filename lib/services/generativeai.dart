@@ -7,77 +7,31 @@ final OPENAI_API_KEY = dotenv.env['OPENAI_API_KEY']!;
 const openaiApiUrl = 'https://api.openai.com/v1/chat/completions';
 
 const noteGeneratorPrompt = '''
-The user enters a transcribed unstructured text from a classroom lecture, YouTube educational video, etc. 
-    Your job is to generate a well structured short notes (important summaries) of the content that would help the student prepare for the exam regarding the educational content.
-    Format your response as follows.
+Create structured short notes in HTML and questions in JSON from the provided unstructured text. Use HTML tags like 'b', 'mark', and headers for emphasis and organization, with nested 'ul' for topics. Separate notes and questions with "----------" and end with another "----------" followed by a title for the note.
 
-Return the short notes inside of HTML file format. Please do not  add any extra characters, words, or sentences apart from the html in the response.
+Example Output:
 
-
-this is how the html content should be returned.
-Use different HTML tags to better the output of the HTML such as the 'b' tag to make time bold, the 'mark' tag to highlight important words or phrases, and also use header tags. And also use a nested ul list for list of notes under a topic. put the title of the short note in a <h2> tag.
-
-
-
-Here is an example of how html content should look like and you should add all the head content from the example to your response. only change the content based on the example.
-
-
-``` 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-  
-    body > ul {
-      padding: 0;
-      margin: 20px;
-    }
-    body > ul > * {
-      padding: 5px;
-
-    }
-    h2 {
-      text-align: center;
-    }
-    </style>
-</head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body>
+  <style>body > ul {padding: 0; margin: 20px;} body > ul > * {padding: 5px;} h2 {text-align: center;}</style>
   <ul>
-    <h2>Microorganisms</h2>
-      <ul>
-        <li>Small living organisms not visible to the naked eye</li>
-        <li>Wide variety of species</li>
-        <li>Play important roles in various ecosystems</li>
-      </ul>
-    </li>
-    
-      <ul>
-        <h3><u>Types:</u></h3>
-        <li>Bacteria:</li>
-        <ul>
-          <li>Single-celled prokaryotes</li>
-          <li>Found virtually everywhere on Earth</li>
-          <li>Some species can be harmful (pathogenic bacteria)</li>
-        </ul>
-        <li>Viruses:</li>
-        <ul>
-          <li>Obligate <mark>intracellular</mark> parasites</li>
-          <li>Consist of genetic material enclosed in a protein coat</li>
-          <li><mark>Cannot reproduce</mark> without a host</li>
-        </ul>
-        <li>Fungi:</li>
-        <ul>
-          <li>Eukaryotic organisms</li>
-          <li>Obtain nutrients by absorbing them from their environment</li>
-          <li>Include yeasts, molds, and mushrooms</li>
-        </ul>
-        
+    <h2>Topic</h2>
+    <ul>
+        <li><b>Point 1</b></li>
+        <li><mark>Point 2</mark></li>
+    </ul>
+  </ul>
 </body>
 </html>
-
-```
+----------
+[
+  {"question": "Q1?", "answer": "A1"},
+  {"question": "Q2?", "answer": "A2"}
+]
+----------
+Title
 
 ''';
 Future<String> generateNote(String transcribedRawText) async {
@@ -107,7 +61,7 @@ Future<String> generateNote(String transcribedRawText) async {
       }
     ],
     'temperature': 1,
-    'max_tokens': 256,
+    'max_tokens': 1000,
     'top_p': 1,
     'frequency_penalty': 0,
     'presence_penalty': 0
@@ -126,3 +80,8 @@ Future<String> generateNote(String transcribedRawText) async {
 
   return generatedNote;
 }
+
+
+
+//   var paths = await dbHelper.getPaths();
+//   print(paths);
