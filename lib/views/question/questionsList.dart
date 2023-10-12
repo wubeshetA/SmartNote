@@ -1,6 +1,6 @@
 // Create a stateful widget that can just display helloworld
 import 'package:flutter/material.dart';
-import 'package:smartnote/views/screens/question/question.dart';
+import 'package:smartnote/views/question/question.dart';
 
 class Questions extends StatefulWidget {
   const Questions({Key? key}) : super(key: key);

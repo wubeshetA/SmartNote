@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smartnote/views/screens/recorder/record.dart';
+import 'package:smartnote/views/recorder/record.dart';
 
 class Recorder extends StatefulWidget {
   const Recorder({Key? key}) : super(key: key);

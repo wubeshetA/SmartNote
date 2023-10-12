@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'views/screens/bottom_navigator.dart';
-import 'views/screens/note/note.dart';
+import 'views/bottom_navigator.dart';
+import 'views/note/note.dart';
 
 void main() => runApp(MyApp());
 
