@@ -1,7 +1,8 @@
-// Create a stateful widget that can just display helloworld
 import 'package:flutter/material.dart';
+
 import 'package:webview_flutter/webview_flutter.dart';
 import 'note.dart';
+
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class Notes extends StatefulWidget {
 }
 
 class _NotesState extends State<Notes> {
+
   List<Note> notes = [
     Note(title: "Microbiology", date: DateTime.now()),
     Note(title: "Science", date: DateTime.now()),
@@ -87,14 +89,17 @@ class DetailScreen extends StatelessWidget {
 
   const DetailScreen({Key? key, required this.note}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text(note.title),
       ),
       body: Center(
         child: Text('Details for ${note.title}'),
+
       ),
     );
   }

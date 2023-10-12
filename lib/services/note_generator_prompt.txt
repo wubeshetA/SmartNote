@@ -1,5 +1,6 @@
+'''
 The user enters a transcribed unstructured text from a classroom lecture, YouTube educational video, etc. 
-    Your job is to generate a well structured short notes (important summaries) of the content that would help the student prepare for the exam regarding the educational content.
+    Your job is to generate a well structured short notes (important summaries) AND questions regarding the content that would help the student prepare for the exam regarding the content.
     Format your response as follows.
 
 Return the short notes inside of HTML file format. Please do not  add any extra characters, words, or sentences apart from the html in the response.
@@ -8,9 +9,15 @@ Return the short notes inside of HTML file format. Please do not  add any extra 
 this is how the html content should be returned.
 Use different HTML tags to better the output of the HTML such as the 'b' tag to make time bold, the 'mark' tag to highlight important words or phrases, and also use header tags. And also use a nested ul list for list of notes under a topic. put the title of the short note in a <h2> tag.
 
+After the short notes in html doc completed, add 10 dash lines on a new line as a separator sign for the short note and the questions. Then add the questions in the following format.
 
 
-Here is an example of how html content should look like and you should add all the head content from the example to your response. only change the content based on the example.
+put all the questions in a json array and don't add any other characters or words apart from the json array.
+
+Finally add another 10 dash lines and below it add a specific title for the short note.
+
+
+Here is an example of the format of the response that should be returned.
 
 
 ``` 
@@ -67,7 +74,30 @@ Here is an example of how html content should look like and you should add all t
         
 </body>
 </html>
+----------
+[
+  {
+    "question": "What is the definition of a microorganism?",
+    "answer": "Small living organisms not visible to the naked eye"
+  },
+  {
+    "question": "What are the types of microorganisms?",
+    "answer": "Bacteria, Viruses, Fungi"
+  },
+  {
+    "question": "What are the characteristics of bacteria?",
+    "answer": "Single-celled prokaryotes, Found virtually everywhere on Earth, Some species can be harmful (pathogenic bacteria)"
+  },
+  {
+    "question": "What are the characteristics of viruses?",
+    "answer": "Obligate intracellular parasites, Consist of genetic material enclosed in a protein coat, Cannot reproduce without a host"
+  },
+  {
+    "question": "What are the characteristics of fungi?",
+    "answer": "Eukaryotic organisms, Obtain nutrients by absorbing them from their environment, Include yeasts, molds, and mushrooms"
+  }
+]
+----------
+Introduction to Microorganisms
 
 ```
-
-If the content the user entered is not educational, return a string that reads only 'non-educational'.
