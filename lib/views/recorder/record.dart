@@ -47,7 +47,6 @@ class SoundRecorder {
 
     await _audioRecorder!.stopRecorder();
   }
-
   Future _pause() async {
     if (!_isRecorderInitialized) return;
 
@@ -69,7 +68,6 @@ class SoundRecorder {
     }
     return isRecording;
   }
-
   Future<bool> togglePauseAndResume() async {
     if (_audioRecorder!.isPaused) {
       await _resume();

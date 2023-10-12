@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/storage/localStorage.dart';
-import 'package:smartnote/services/storage/sqlite_db_helper.dart';
-import 'package:smartnote/theme.dart';
+
+import 'package:webview_flutter/webview_flutter.dart';
+import 'note.dart';
+
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -11,78 +12,94 @@ class Notes extends StatefulWidget {
 }
 
 class _NotesState extends State<Notes> {
-  late Future<List<String>> pathsFuture;
+
+  List<Note> notes = [
+    Note(title: "Microbiology", date: DateTime.now()),
+    Note(title: "Science", date: DateTime.now()),
+    Note(title: "Algebra linear", date: DateTime.now()),
+    Note(title: "Calculus", date: DateTime.now()),
+    Note(title: "World Economic", date: DateTime.now()),
+    Note(title: "Arts Story", date: DateTime.now()),
+  ];
 
   @override
-  void initState() {
-    super.initState();
-    pathsFuture = readPaths();
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Notes',
+          ),
+          backgroundColor: Color.fromARGB(221, 246, 244, 244),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: [
+            CircleAvatar(
+              // Replace with your image or use a placeholder
 
-  Future<List<String>> readPaths() async {
-    var sqliteDbHelper = SqliteDatabaseHelper();
+              radius: 20,
+            ),
+            SizedBox(width: 15),
+          ],
+        ),
+        body: ListView.builder(
+          itemCount: notes.length,
+          itemBuilder: (context, index) {
+            final note = notes[index];
+            return InkWell(
+              onTap: () {
+                // Push to a new screen or redirect as needed
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NoteWebViewContainer()));
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      child: ListTile(
+                        title: Text(note.title),
+                        subtitle: Text(note.date.toString()),
+                        trailing: Icon(Icons.question_answer_outlined),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+}
 
-    var paths = await sqliteDbHelper.getPaths();
-    List<String> titles = [];
+class Note {
+  final String title;
+  final DateTime date;
 
-    for (var path in paths) {
-      // call the read file function for each path
-      print(
-          "============printing note&Q with id: ${path['id']}====================");
-      print(await readFileContent(path['notes'].toString()));
-      print("---------------");
-      print(await readFileContent(path['questions'].toString()));
-      titles.add(path['title'].toString());
-    }
+  const Note({
+    required this.title,
+    required this.date,
+  });
+}
 
-    return titles; // return the list of titles
-  }
+class DetailScreen extends StatelessWidget {
+  final Note note;
+
+  const DetailScreen({Key? key, required this.note}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('Recorder'),
-        title: Text('Record'),
-        centerTitle: true,
-        backgroundColor: bgColor,
-        elevation: 0.0,
-        // add a sign in button on the right side
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.login),
-          ),
-        ],
+
+        title: Text(note.title),
       ),
+      body: Center(
+        child: Text('Details for ${note.title}'),
 
-
-      body: FutureBuilder<List<String>>(
-        future: pathsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child:
-                    CircularProgressIndicator()); // Show a loader until Future is completed
-          } else {
-            if (snapshot.hasError)
-              return Center(child: Text('Error: ${snapshot.error}'));
-            else if (!snapshot.hasData)
-              return Center(child: Text('No Titles Found'));
-            else // When Future is complete and no errors occurred, return the created posts
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index]),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/note');
-                    },
-                  );
-                },
-              );
-          }
-        },
       ),
     );
   }
