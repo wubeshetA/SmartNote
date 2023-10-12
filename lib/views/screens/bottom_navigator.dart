@@ -34,33 +34,37 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: Colors.black,
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
           child: GNav(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             activeColor: Colors.white,
             color: Colors.white,
             // add gradient color for the tab background
-            tabBackgroundColor: Colors.grey.shade800,
+            tabBackgroundColor: Colors.greenAccent,
             gap: 8,
             padding: EdgeInsets.all(16),
             tabs: [
               GButton(
                 icon: Icons.mic,
                 text: 'Record',
+                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
               GButton(
                 icon: Icons.file_upload,
                 text: 'Upload',
+                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
               GButton(
                 icon: Icons.note,
                 text: 'Notes',
+                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
               GButton(
                 icon: Icons.question_answer,
                 text: 'Questions',
+                iconColor: Color.fromARGB(255, 179, 178, 178),
               ),
             ],
             selectedIndex: _selectedIndex,

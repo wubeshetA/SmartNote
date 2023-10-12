@@ -16,10 +16,10 @@ class SoundRecorder {
     print('trying to get permission');
     final status = await Permission.microphone.request();
     print("reached here");
-    if (status != PermissionStatus.granted) {
-      print('could not get microphone permission');
-      throw RecordingPermissionException('Microphone permission not granted');
-    }
+    // if (status != PermissionStatus.granted) {
+    //   print('could not get microphone permission');
+    //   throw RecordingPermissionException('Microphone permission not granted');
+    // }
     print("passed the if statement");
 
     await _audioRecorder!.openAudioSession();
@@ -51,12 +51,11 @@ class SoundRecorder {
 
   /// Toggles between starting and stopping the audio recorder.
   Future<bool> toggleRecording() async {
-  if (_audioRecorder!.isStopped) {
-    await _record();
-  } else {
-    await _stop();
+    if (_audioRecorder!.isStopped) {
+      await _record();
+    } else {
+      await _stop();
+    }
+    return isRecording;
   }
-  return isRecording;
-}
-
 }
