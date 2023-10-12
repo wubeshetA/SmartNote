@@ -21,21 +21,52 @@ class _NotesState extends State<Notes> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('ListView Navigation'),
+          title: const Text(
+            'Questions',
+          ),
+          backgroundColor: Color.fromARGB(221, 246, 244, 244),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: [
+            CircleAvatar(
+              // Replace with your image or use a placeholder
+
+              radius: 20,
+            ),
+            SizedBox(width: 15),
+          ],
         ),
         body: ListView.builder(
-            itemCount: notes.length,
-            itemBuilder: (context, index) {
-              final note = notes[index];
-              return Card(
-                child: ListTile(
-                  title: Text(note.title),
-                  subtitle: Text(note.date.toString()),
-                  trailing: const Icon(Icons.question_answer_outlined),
-                ),
-              );
-            }),
+          itemCount: notes.length,
+          itemBuilder: (context, index) {
+            final note = notes[index];
+            return InkWell(
+              onTap: () {
+                // Push to a new screen or redirect as needed
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailScreen(note: note)));
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Card(
+                      child: ListTile(
+                        title: Text(note.title),
+                        subtitle: Text(note.date.toString()),
+                        trailing: Icon(Icons.question_answer_outlined),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       );
 }
 
@@ -47,4 +78,22 @@ class Note {
     required this.title,
     required this.date,
   });
+}
+
+class DetailScreen extends StatelessWidget {
+  final Note note;
+
+  const DetailScreen({Key? key, required this.note}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(note.title),
+      ),
+      body: Center(
+        child: Text('Details for ${note.title}'),
+      ),
+    );
+  }
 }
