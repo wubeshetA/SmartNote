@@ -18,6 +18,8 @@ class SqliteDatabaseHelper {
     var documentsDirectory = await getApplicationDocumentsDirectory();
     var path = documentsDirectory.path + dbName;
     print("==============================Database Path: $path");
+    // var tmp = documentsDirectory.path + "smartnote.db";
+    // await deleteDatabase(tmp);
 
     return openDatabase(
       path,
@@ -27,7 +29,8 @@ class SqliteDatabaseHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    await db.execute('''
+    await db.execute(
+        '''
       CREATE TABLE paths (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         notes TEXT NOT NULL,
@@ -76,22 +79,6 @@ class SqliteDatabaseHelper {
 //   });
 
 //   // response exmpale for inserPath method
-//   const all_data = [
-//     {
-//       'id': 1,
-//       'notes': 'path_to_note_1_location.html', // html file
-//       'questions': 'file_path_to_questions_for_this_note.json', // json file
-//       'title': 'title of the shortnote',
-//       'created_at': 'date time'
-//     },
-//     {
-//       'id': 2,
-//       'notes': 'path_to_note_2_location.html', // html file
-//       'questions': 'file_path_to_questions_for_this_note.json', // json file
-//       'title': 'title of the shortnote',
-//       'created_at': 'date time'
-//     },
-//   ];
 
 //   // Delete data
 //   // var rowsDeleted = await dbHelper.deletePath(id);

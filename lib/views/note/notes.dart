@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 import 'note.dart';
-
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -10,9 +10,9 @@ class Notes extends StatefulWidget {
   @override
   _NotesState createState() => _NotesState();
 }
+  
 
 class _NotesState extends State<Notes> {
-
   List<Note> notes = [
     Note(title: "Microbiology", date: DateTime.now()),
     Note(title: "Science", date: DateTime.now()),
@@ -22,9 +22,12 @@ class _NotesState extends State<Notes> {
     Note(title: "Arts Story", date: DateTime.now()),
   ];
 
+
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          
           title: const Text(
             'Notes',
           ),
@@ -89,17 +92,14 @@ class DetailScreen extends StatelessWidget {
 
   const DetailScreen({Key? key, required this.note}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text(note.title),
       ),
       body: Center(
         child: Text('Details for ${note.title}'),
-
       ),
     );
   }

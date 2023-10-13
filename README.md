@@ -1,24 +1,42 @@
 # SmartNote - AI Note Taking App
 
-SmartNote is an AI supported note taking app that allows users to take notes from class rooms, youtube videos, and other online courses.
-It uses Generative AI to generate notes(summary) from the audio input. It also generate customized questions (with answers also provided) from the notes to help students understand the notes better.
+## Introduction
 
-## Structre
-This app is being built with Flutter and Dart and will support firebase backend for authentication and storage.
+SmartNote is your next-generation note-taking companion, equipped with AI to transform the way you capture and understand information. It is designed for students, professionals, and anyone eager to turn speeches, lectures, and online content into comprehensive notes and interactive learning materials.
 
-The repository is structured as follows:
+## Features
 
- - `lib/`: contains the source code of the app
+- **AI-Powered Summaries:** SmartNote employs Generative AI to transform audio content from classrooms, YouTube videos, online courses, and more into concise, understandable notes.
+- **Interactive Learning:** It doesn't just stop at notes; SmartNote also crafts customized questions with answers directly derived from the content, offering an enhanced learning experience.
+- **Accessibility:** With our intuitive design and user-friendly interface, accessing and navigating through your notes is a breeze.
 
-## Purpose
-The purpose of this repository is to provide a collaborative environment for the development of the SmartNote app. By making the respository public, we hope to encourage contributions from the community.
+### Visual Design
 
-## How Generative AI Models are Solving the Problem
+Get a glimpse of the app’s aesthetics and functionalities on [Figma](https://www.figma.com/file/ZuzGX4w0x4oG8sTfDRYoco/SmartNote?type=design&node-id=32%3A1610&mode=design&t=EzG4vhixAetbWJFU-1). For a more dynamic overview, check out the video demo [here](https://drive.google.com/file/d/1-PCBwfZUp4IVmuRftEyM_jJ2-Iu8DqUI/view?usp=sharing).
 
-The problem of note taking is a very common problem that students face. For many students it is not very convenient to take notes while listening to the lecture or taking online courses because they have to pause the video or the lecture to take notes. This causes distractions and students often miss the whole point or process of a certain concept while trying to take the note. This is where SmartNote comes in. SmartNote uses Generative AI to generate notes from the audio input. It also generate customized questions (with answers also provided) from the notes to help students understand the notes better.
+## Technical Structure
 
-SmartNote leverages Generative AI models to generate notes from audio input. It uses a combination of Speech Recognition and Natural Language Processing to generate notes from the audio input. Generative AI models are also used to generate questions from the notes. The questions are generated in a way that they are customized to the notes. The answers to the questions are also provided. We use the OpenAI model `gpt-3.5_turbo` to accomplish this.
+SmartNote is crafted with Flutter and Dart, ensuring a smooth, cross-platform experience. We're also utilizing Firebase for robust authentication and storage, guaranteeing technical reliability and seamless user interaction.
 
-## Contribution
-We welcome contributions from the community.
-Follow this guideline for contribution. [CONTRIBUTING.md](./CONTRIBUTING.md)
+### Repository Organization:
+
+- `lib/`: Holds the app’s source code
+    - `views/`: Houses the UI components and screens
+    - `services/`: Encapsulates the business logic, including:
+        - `storage`: Manages data storage and database interactions
+        - `generativeAI`: Handles API requests to OpenAI's Generative AI models
+        - `transcribe`: Employs Google Speech Recognition API for audio transcription
+
+## Our Mission
+
+SmartNote aspires to revolutionize note-taking by eliminating the interruptions and inconveniences associated with traditional methods. We're opening our repository to the public to foster a community of innovators and learners committed to enhancing education and information retention.
+
+## The AI Edge
+
+In the traditional setting, students juggle between listening and note-taking, often losing the essence of the learning material. SmartNote’s AI swiftly converts audio inputs into structured notes, allowing users to focus solely on comprehension and interaction. We integrate Speech Recognition and Natural Language Processing, powered by OpenAI’s `gpt-3.5_turbo`, ensuring the generated content is accurate and tailored to the source material.
+
+## Get Involved!
+
+Join us in refining and expanding SmartNote! Your insights and contributions are valuable in making education accessible and engaging for everyone. Kindly refer to our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to be a part of this innovative journey.
+
+---
