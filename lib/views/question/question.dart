@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class QuestionView extends StatefulWidget {
-  const QuestionView({Key? key}) : super(key: key);
+  final String jsonFilePath;
+  const QuestionView({required this.jsonFilePath, Key? key}) : super(key: key);
 
   @override
   _QuestionViewState createState() => _QuestionViewState();
 }
 
 class _QuestionViewState extends State<QuestionView> {
-  List<Question> questions = [
-    const Question(
-        question: "What is the definition of a microorganism?",
-        answer: "Small living organisms not visible to the naked eye"),
-    const Question(
-        question: "What are the types of microorganisms?",
-        answer: "Bacteria, Viruses, Fungi"),
-    const Question(
-        question: "What are the characteristics of bacteria?",
-        answer:
-            "Single-celled prokaryotes, Found virtually everywhere on Earth, Some species can be harmful (pathogenic bacteria)"),
-    const Question(
-        question: "What are the characteristics of viruses?",
-        answer:
-            "Obligate intracellular parasites, Consist of genetic material enclosed in a protein coat, Cannot reproduce without a host"),
-    const Question(
-        question: "What are the characteristics of fungi?",
-        answer:
-            "Eukaryotic organisms, Obtain nutrients by absorbing them from their environment, Include yeasts, molds, and mushrooms"),
-  ];
+  List<Question> questions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadQuestionsFromAsset().then((_) {
+      setState(() {}); // Rebuild the widget after loading the data.
+    });
+  }
+
+  Future<void> loadQuestionsFromAsset() async {
+    String jsonString = await rootBundle.loadString(widget.jsonFilePath);
+    List jsonData = jsonDecode(jsonString);
+    print(jsonData);
+    questions = jsonData
+        .map((questionData) => Question(
+            question: questionData['question'], answer: questionData['answer']))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(

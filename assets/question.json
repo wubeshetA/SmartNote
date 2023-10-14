@@ -1,0 +1,22 @@
+[
+  {
+    "question": "What is the definition of a microorganism?",
+    "answer": "Small living organisms not visible to the naked eye"
+  },
+  {
+    "question": "What are the types of microorganisms?",
+    "answer": "Bacteria, Viruses, Fungi"
+  },
+  {
+    "question": "What are the characteristics of bacteria?",
+    "answer": "Single-celled prokaryotes, Found virtually everywhere on Earth, Some species can be harmful (pathogenic bacteria)"
+  },
+  {
+    "question": "What are the characteristics of viruses?",
+    "answer": "Obligate intracellular parasites, Consist of genetic material enclosed in a protein coat, Cannot reproduce without a host"
+  },
+  {
+    "question": "What are the characteristics of fungi?",
+    "answer": "Eukaryotic organisms, Obtain nutrients by absorbing them from their environment, Include yeasts, molds, and mushrooms"
+  }
+]

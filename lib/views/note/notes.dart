@@ -27,7 +27,7 @@ class _NotesState extends State<Notes> {
     const DataNote(
         id: 1,
         notes: 'assets/trial.html', // html file
-        questions: 'file_path_to_questions_for_this_note.json', // json file
+        questions: 'assets/.json', // json file
         title: 'title of the shortnote',
         created_at: 'date time'),
     const DataNote(
