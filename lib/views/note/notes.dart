@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 
@@ -10,7 +12,6 @@ class Notes extends StatefulWidget {
   @override
   _NotesState createState() => _NotesState();
 }
-  
 
 class _NotesState extends State<Notes> {
   List<Note> notes = [
@@ -22,12 +23,24 @@ class _NotesState extends State<Notes> {
     Note(title: "Arts Story", date: DateTime.now()),
   ];
 
-
+  List<DataNote> all_data = [
+    const DataNote(
+        id: 1,
+        notes: 'assets/trial.html', // html file
+        questions: 'file_path_to_questions_for_this_note.json', // json file
+        title: 'title of the shortnote',
+        created_at: 'date time'),
+    const DataNote(
+        id: 2,
+        notes: 'assets/trial.html', // html file
+        questions: 'file_path_to_questions_for_this_note.json', // json file
+        title: 'title of the shortnote',
+        created_at: 'date time'),
+  ];
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          
           title: const Text(
             'Notes',
           ),
@@ -47,24 +60,25 @@ class _NotesState extends State<Notes> {
           ],
         ),
         body: ListView.builder(
-          itemCount: notes.length,
+          itemCount: all_data.length,
           itemBuilder: (context, index) {
-            final note = notes[index];
+            final data = all_data[index];
             return InkWell(
               onTap: () {
                 // Push to a new screen or redirect as needed
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => NoteWebViewContainer()));
+                        builder: (context) =>
+                            NoteWebViewContainer(htmlFilePath: data.notes)));
               },
               child: Row(
                 children: [
                   Expanded(
                     child: Card(
                       child: ListTile(
-                        title: Text(note.title),
-                        subtitle: Text(note.date.toString()),
+                        title: Text(data.title),
+                        subtitle: Text(data.created_at.toString()),
                         trailing: Icon(Icons.question_answer_outlined),
                       ),
                     ),
@@ -103,4 +117,20 @@ class DetailScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class DataNote {
+  final int id;
+  final String notes;
+  final String questions;
+  final String title;
+  final String created_at;
+
+  const DataNote({
+    required this.id,
+    required this.notes,
+    required this.questions,
+    required this.title,
+    required this.created_at,
+  });
 }

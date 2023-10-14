@@ -14,8 +14,6 @@ void main() async {
 
 // =============== playground for file reading
 
- 
-
   runApp(MyApp());
 }
 
@@ -25,7 +23,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         // '/': (context) => Home(),
-        '/note': (context) => NoteWebViewContainer(),
+        '/note': (context) =>
+            NoteWebViewContainer(htmlFilePath: 'path_to_your_html_file.html'),
       },
       // remove debug banner
       debugShowCheckedModeBanner: false,
