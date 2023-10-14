@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'note.dart';
 
-
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
 
@@ -12,7 +11,6 @@ class Notes extends StatefulWidget {
 }
 
 class _NotesState extends State<Notes> {
-
   List<Note> notes = [
     Note(title: "Microbiology", date: DateTime.now()),
     Note(title: "Science", date: DateTime.now()),
@@ -40,7 +38,7 @@ class _NotesState extends State<Notes> {
 
               radius: 20,
             ),
-            SizedBox(width: 15),
+            SizedBox(width: 156g ghdhdfhgfhdfhhg;cvcc  hch d),
           ],
         ),
         body: ListView.builder(
@@ -89,18 +87,31 @@ class DetailScreen extends StatelessWidget {
 
   const DetailScreen({Key? key, required this.note}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         title: Text(note.title),
       ),
       body: Center(
         child: Text('Details for ${note.title}'),
-
       ),
     );
   }
+}
+
+class DataNote {
+  final String id;
+  final String notes;
+  final String questions;
+  final String title;
+  final DateTime created_at;
+
+  const DataNote({
+    required this.id,
+    required this.notes,
+    required this.questions,
+    required this.title,
+    required this.created_at,
+  });
 }
