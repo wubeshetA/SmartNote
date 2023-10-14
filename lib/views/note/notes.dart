@@ -38,7 +38,7 @@ class _NotesState extends State<Notes> {
 
               radius: 20,
             ),
-            SizedBox(width: 156g ghdhdfhgfhdfhhg;cvcc  hch d),
+            SizedBox(width: 15),
           ],
         ),
         body: ListView.builder(

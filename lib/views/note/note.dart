@@ -27,7 +27,7 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: WebView(
+      body: WebViewWidget(
         initialUrl: 'about:blank',
         onWebViewCreated: (WebViewController webViewController) {
           controller = webViewController;
