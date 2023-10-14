@@ -14,29 +14,27 @@ class Notes extends StatefulWidget {
 }
 
 class _NotesState extends State<Notes> {
-  List<Note> notes = [
-    Note(title: "Microbiology", date: DateTime.now()),
-    Note(title: "Science", date: DateTime.now()),
-    Note(title: "Algebra linear", date: DateTime.now()),
-    Note(title: "Calculus", date: DateTime.now()),
-    Note(title: "World Economic", date: DateTime.now()),
-    Note(title: "Arts Story", date: DateTime.now()),
-  ];
+  // List<Note> notes = [
+  //   Note(title: "Microbiology", date: DateTime.now()),
+  //   Note(title: "Science", date: DateTime.now()),
+  //   Note(title: "Algebra linear", date: DateTime.now()),
+  //   Note(title: "Calculus", date: DateTime.now()),
+  //   Note(title: "World Economic", date: DateTime.now()),
+  //   Note(title: "Arts Story", date: DateTime.now()),
+  // ];
+  late Future<List<DataNote>> all_data;
+  @override
+  void initState() {
+    super.initState();
+    all_data = fetchData();
+  }
 
-  List<DataNote> all_data = [
-    const DataNote(
-        id: 1,
-        notes: 'assets/trial.html', // html file
-        questions: 'assets/.json', // json file
-        title: 'title of the shortnote',
-        created_at: 'date time'),
-    const DataNote(
-        id: 2,
-        notes: 'assets/trial.html', // html file
-        questions: 'file_path_to_questions_for_this_note.json', // json file
-        title: 'title of the shortnote',
-        created_at: 'date time'),
-  ];
+  Future<List<DataNote>> fetchData() async {
+    var dbHelper = SqliteDatabaseHelper();
+    List<Map<String, dynamic>> rawList = await dbHelper.getPaths();
+
+    return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -59,33 +57,46 @@ class _NotesState extends State<Notes> {
             SizedBox(width: 15),
           ],
         ),
-        body: ListView.builder(
-          itemCount: all_data.length,
-          itemBuilder: (context, index) {
-            final data = all_data[index];
-            return InkWell(
-              onTap: () {
-                // Push to a new screen or redirect as needed
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            NoteWebViewContainer(htmlFilePath: data.notes)));
-              },
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Card(
-                      child: ListTile(
-                        title: Text(data.title),
-                        subtitle: Text(data.created_at.toString()),
-                        trailing: Icon(Icons.question_answer_outlined),
-                      ),
+        body: FutureBuilder<List<DataNote>>(
+          future: all_data,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(child: Text('No data found.'));
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  final data = snapshot.data![index];
+                  return InkWell(
+                    onTap: () {
+                      // Push to a new screen or redirect as needed
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NoteWebViewContainer(
+                                  htmlFilePath: data.notes)));
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Card(
+                            child: ListTile(
+                              title: Text(data.title),
+                              subtitle: Text(data.created_at.toString()),
+                              trailing: Icon(Icons.question_answer_outlined),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            );
+                  );
+                },
+              );
+            }
           },
         ),
       );
@@ -119,18 +130,45 @@ class DetailScreen extends StatelessWidget {
   }
 }
 
+// class DataNote {
+//   final int id;
+//   final String notes;
+//   final String questions;
+//   final String title;
+//   final String created_at;
+
+//   const DataNote({
+//     required this.id,
+//     required this.notes,
+//     required this.questions,
+//     required this.title,
+//     required this.created_at,
+//   });
+// }
+
 class DataNote {
-  final int id;
+  final int
+      id; // I noticed it was a String in your example, make sure this is the right type
   final String notes;
   final String questions;
   final String title;
   final String created_at;
 
-  const DataNote({
+  DataNote({
     required this.id,
     required this.notes,
     required this.questions,
     required this.title,
     required this.created_at,
   });
+
+  factory DataNote.fromMap(Map<String, dynamic> map) {
+    return DataNote(
+      id: map['id'],
+      notes: map['notes'],
+      questions: map['questions'],
+      title: map['title'],
+      created_at: map['created_at'],
+    );
+  }
 }
