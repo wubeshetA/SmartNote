@@ -1,6 +1,7 @@
-// Create a stateful widget that can just display helloworld
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'dart:async';
+import 'dart:io';
 import 'package:smartnote/views/question/question.dart';
 
 class Questions extends StatefulWidget {
@@ -117,16 +118,6 @@ class DetailScreen extends StatelessWidget {
   }
 }
 
-// class Note {
-//   final String title;
-//   final DateTime date;
-
-//   const Note({
-//     required this.title,
-//     required this.date,
-//   });
-// }
-
 void main() async {
   var dbHelper = SqliteDatabaseHelper();
   var paths = await dbHelper.getPaths();
@@ -134,8 +125,7 @@ void main() async {
 }
 
 class DataNote {
-  final int
-      id; // I noticed it was a String in your example, make sure this is the right type
+  final int id;
   final String notes;
   final String questions;
   final String title;

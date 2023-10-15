@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:smartnote/theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -14,22 +14,17 @@ class NoteWebViewContainer extends StatefulWidget {
 }
 
 class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
-  final controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.disabled);
+  late WebViewController controller;
+  bool isControllerInitialized = false;
 
-  Future<String> loadHtmlFromAsset(String assetPath) async {
-    return await rootBundle.loadString(assetPath);
+  Future<String> loadHtmlFromFile(String filePath) async {
+    final file = File(filePath);
+    return await file.readAsString();
   }
 
   Future<void> setupWebviewContent() async {
-    String htmlContent = await loadHtmlFromAsset(widget.htmlFilePath);
+    String htmlContent = await loadHtmlFromFile(widget.htmlFilePath);
     controller.loadHtmlString(htmlContent);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    setupWebviewContent();
   }
 
   @override
@@ -49,11 +44,22 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
           SliverToBoxAdapter(
             child: Container(
               height: 1000, // Adjust as needed
-              child: WebViewWidget(controller: controller),
+              child: isControllerInitialized
+                  ? WebViewWidget(controller: controller)
+                  : Center(child: CircularProgressIndicator()),
             ),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        WebViewController(); // Assuming WebViewWidget provides a default constructor
+    isControllerInitialized = true;
+    setupWebviewContent();
   }
 }

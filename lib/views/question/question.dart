@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'dart:io';
 import 'dart:convert';
 
 class QuestionView extends StatefulWidget {
@@ -16,15 +16,15 @@ class _QuestionViewState extends State<QuestionView> {
   @override
   void initState() {
     super.initState();
-    loadQuestionsFromAsset().then((_) {
+    loadQuestionsFromFile().then((_) {
       setState(() {}); // Rebuild the widget after loading the data.
     });
   }
 
-  Future<void> loadQuestionsFromAsset() async {
-    String jsonString = await rootBundle.loadString(widget.jsonFilePath);
+  Future<void> loadQuestionsFromFile() async {
+    final file = File(widget.jsonFilePath);
+    String jsonString = await file.readAsString();
     List jsonData = jsonDecode(jsonString);
-    print(jsonData);
     questions = jsonData
         .map((questionData) => Question(
             question: questionData['question'], answer: questionData['answer']))
