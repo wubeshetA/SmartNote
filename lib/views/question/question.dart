@@ -57,14 +57,19 @@ class _QuestionViewState extends State<QuestionView> {
             return Card(
               child: ExpansionTile(
                 title: Text("$index: ${question.question}"),
-                trailing: const Icon(
-                  Icons.question_answer_outlined,
-                  color: bgColor,
-                ),
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(question.answer),
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start, // aligns text to the left
+                      children: [
+                        Text("Answer:"),
+                        SizedBox(height: 30.0),
+                        Text(question
+                            .answer), // Assuming 'question' is defined in this scope.
+                      ],
+                    ),
                   ),
                 ],
               ),
