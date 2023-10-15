@@ -60,18 +60,15 @@ class _QuestionViewState extends State<QuestionView> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(30.0),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start, // aligns text to the left
-                        children: [
-                          Text("Answer:"),
-                          SizedBox(height: 30.0),
-                          Text(question
-                              .answer), // Assuming 'question' is defined in this scope.
-                        ],
-                      ),
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start, // aligns text to the left
+                      children: [
+                        Text("Answer:"),
+                        SizedBox(height: 10.0),
+                        Text(question
+                            .answer), // Assuming 'question' is defined in this scope.
+                      ],
                     ),
                   ),
                 ],
