@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/theme.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 import 'note.dart';
@@ -42,19 +43,17 @@ class _NotesState extends State<Notes> {
           title: const Text(
             'Notes',
           ),
-          backgroundColor: Color.fromARGB(221, 246, 244, 244),
+          backgroundColor: bgColor,
           centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
-          ),
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back),
+          //   onPressed: () => Navigator.pop(context),
+          // ),
           actions: [
-            CircleAvatar(
-              // Replace with your image or use a placeholder
-
-              radius: 20,
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.login),
             ),
-            SizedBox(width: 15),
           ],
         ),
         body: FutureBuilder<List<DataNote>>(

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
+import 'package:smartnote/views/note/notes.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class NoteWebViewContainer extends StatefulWidget {
@@ -25,6 +27,14 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
   Future<void> setupWebviewContent() async {
     String htmlContent = await loadHtmlFromFile(widget.htmlFilePath);
     controller.loadHtmlString(htmlContent);
+  }
+
+  late Future<List<DataNote>> all_data;
+
+  Future<List<DataNote>> fetchData() async {
+    var dbHelper = SqliteDatabaseHelper();
+    List<Map<String, dynamic>> rawList = await dbHelper.getPaths();
+    return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
   }
 
   @override
@@ -61,5 +71,6 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
         WebViewController(); // Assuming WebViewWidget provides a default constructor
     isControllerInitialized = true;
     setupWebviewContent();
+    all_data = fetchData();
   }
 }

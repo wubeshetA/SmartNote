@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:smartnote/theme.dart';
+
 class QuestionView extends StatefulWidget {
   final String jsonFilePath;
   const QuestionView({required this.jsonFilePath, Key? key}) : super(key: key);
@@ -35,17 +37,17 @@ class _QuestionViewState extends State<QuestionView> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Questions'),
+          backgroundColor: bgColor,
           centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context),
           ),
           actions: [
-            const CircleAvatar(
-              // Replace with your image or use a placeholder
-              radius: 20,
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.login),
             ),
-            const SizedBox(width: 15),
           ],
         ),
         body: ListView.builder(
@@ -55,7 +57,10 @@ class _QuestionViewState extends State<QuestionView> {
             return Card(
               child: ExpansionTile(
                 title: Text("$index: ${question.question}"),
-                trailing: const Icon(Icons.question_answer_outlined),
+                trailing: const Icon(
+                  Icons.question_answer_outlined,
+                  color: bgColor,
+                ),
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(16.0),
