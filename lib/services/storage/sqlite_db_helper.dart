@@ -29,8 +29,7 @@ class SqliteDatabaseHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    await db.execute(
-        '''
+    await db.execute('''
       CREATE TABLE paths (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         notes TEXT NOT NULL,
@@ -58,6 +57,12 @@ class SqliteDatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+  }
+
+   //clear all database
+  Future<int> deleteAll() async {
+    Database db = await database;
+    return await db.delete('paths');
   }
 
   Future<List<Map<String, dynamic>>> getPaths() async {
