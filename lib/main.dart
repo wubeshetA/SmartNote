@@ -12,9 +12,21 @@ void main() async {
     statusBarColor: Colors.transparent,
   ));
 
-// =============== playground for file reading
 
- 
+
+// =============== playground ===============
+SqliteDatabaseHelper db = SqliteDatabaseHelper();
+  final all_data = await db.getPaths();
+
+  // remove database
+  // db.deleteAll();
+  print("=============== ALL DATA IN DB ===================");
+  print(all_data);
+  print("=================PRINT ALL DATA IN DB ENDS HERE===================");
+
+
+
+
 
   runApp(MyApp());
 }
@@ -25,7 +37,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         // '/': (context) => Home(),
-        '/note': (context) => NoteWebViewContainer(),
+        '/note': (context) =>
+            NoteWebViewContainer(htmlFilePath: 'path_to_your_html_file.html'),
       },
       // remove debug banner
       debugShowCheckedModeBanner: false,
