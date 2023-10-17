@@ -291,10 +291,7 @@ class _RecorderState extends State<Recorder> {
                                   )
                                 : Container()
 
-                            // ElevatedButton(
-                            //   onPressed: _isRecording ? _stopRecording : null,
-                            //   child: Text('Stop'),
-                            // ),
+                    
                           ],
                         ),
 
@@ -329,6 +326,34 @@ class _RecorderState extends State<Recorder> {
                                             pathToRecorded!);
                                         String gptResponseText =
                                             await generateNote(value);
+                                        if (gptResponseText == '') {
+                                          throw Exception(
+                                              'Note generation failed');
+                                        }
+                                        if (gptResponseText == '') {
+                                          ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: bgColor,
+                                            content: Text(
+                                                'Could\'t generate note!'),
+                                          ),
+                                        );
+                                          throw Exception(
+                                              'Note generation failed');
+                                        }
+                                        if (gptResponseText == 'No text provided') {
+                                          ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            backgroundColor: bgColor,
+                                            content: Text(
+                                                'No relevant text found in the recording'),
+                                          ),
+                                        );
+                                          throw Exception(
+                                              'Note generation failed');
+                                        }
                                         saveNoteAndQuestion(gptResponseText);
 
                                         ScaffoldMessenger.of(context)
@@ -345,9 +370,11 @@ class _RecorderState extends State<Recorder> {
                                           SnackBar(
                                             backgroundColor: Colors.red[700],
                                             content:
-                                                Text('Couldn\'t generate note'),
+                                                Text('Couldn\'t generate note!'),
                                           ),
                                         );
+                                        throw Exception(
+                                            'Note generation failed for unknown reason');
                                       } finally {
                                         setState(() {
                                           _isGeneratingNote =
@@ -359,7 +386,7 @@ class _RecorderState extends State<Recorder> {
                             'Generate Short Note',
                             style: TextStyle(
                               // give it a font size
-                              fontSize: 20,
+                              fontSize: 18,
                             ),
                           ),
                         ),

@@ -12,7 +12,7 @@ class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Upload page'),
+      child: Text('This section is under development!'),
     );
   }
 }
