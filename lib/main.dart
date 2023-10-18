@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/views/splash_screen.dart';
 import 'views/bottom_navigator.dart';
 import 'views/note/note_view.dart';
 
@@ -30,15 +31,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         // '/': (context) => Home(),
-        '/note': (context) =>
-            NoteView(htmlFilePath: 'path_to_your_html_file.html', topicTitle: 'Topic Title'),
+        '/note': (context) => NoteView(
+            htmlFilePath: 'path_to_your_html_file.html',
+            topicTitle: 'Topic Title'),
+        '/main': (context) => BottomNavBarNavigator(),
       },
       // remove debug banner
       debugShowCheckedModeBanner: false,
 
       title: 'Recorder',
       theme: ThemeData(),
-      home: BottomNavBarNavigator(),
+      home: SplashScreen(),
     );
   }
 }
