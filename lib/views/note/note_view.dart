@@ -9,7 +9,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 class NoteView extends StatefulWidget {
   final String htmlFilePath;
   final String topicTitle;
-  const NoteView({required this.htmlFilePath, required this.topicTitle, Key? key}) : super(key: key);
+  const NoteView(
+      {required this.htmlFilePath, required this.topicTitle, Key? key})
+      : super(key: key);
 
   @override
   State<NoteView> createState() => _NoteViewState();
@@ -40,28 +42,23 @@ class _NoteViewState extends State<NoteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 50.0,
-            floating: false,
-            pinned: false,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(widget.topicTitle.toString()),
-              background: Container(color: themeColor),
-            ),
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('${widget.topicTitle}'),
+          backgroundColor: themeColor,
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
           ),
-          SliverToBoxAdapter(
-            child: Container(
-              height: 1000, // Adjust as needed
-              child: isControllerInitialized
-                  ? WebViewWidget(controller: controller)
-                  : Center(child: CircularProgressIndicator()),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.login),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+        body: WebViewWidget(controller: controller));
   }
 
   @override
