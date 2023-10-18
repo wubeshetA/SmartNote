@@ -3,19 +3,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
-import 'package:smartnote/views/note/notes.dart';
+import 'package:smartnote/views/note/notes_list.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class NoteWebViewContainer extends StatefulWidget {
+class NoteView extends StatefulWidget {
   final String htmlFilePath;
-  const NoteWebViewContainer({required this.htmlFilePath, Key? key})
+  final String topicTitle;
+  const NoteView(
+      {required this.htmlFilePath, required this.topicTitle, Key? key})
       : super(key: key);
 
   @override
-  State<NoteWebViewContainer> createState() => _NoteWebViewContainerState();
+  State<NoteView> createState() => _NoteViewState();
 }
 
-class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
+class _NoteViewState extends State<NoteView> {
   late WebViewController controller;
   bool isControllerInitialized = false;
 
@@ -40,28 +42,23 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 50.0,
-            floating: false,
-            pinned: false,
-            flexibleSpace: FlexibleSpaceBar(
-              title: const Text('Notes'),
-              background: Container(color: bgColor),
-            ),
+        appBar: AppBar(
+          elevation: 0.0,
+          title: Text('${widget.topicTitle}'),
+          backgroundColor: themeColor,
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
           ),
-          SliverToBoxAdapter(
-            child: Container(
-              height: 1000, // Adjust as needed
-              child: isControllerInitialized
-                  ? WebViewWidget(controller: controller)
-                  : Center(child: CircularProgressIndicator()),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.login),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+        body: WebViewWidget(controller: controller));
   }
 
   @override

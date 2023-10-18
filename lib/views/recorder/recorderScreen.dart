@@ -150,7 +150,7 @@ class _RecorderState extends State<Recorder> {
         // title: Text('Recorder'),
         title: Text('Record'),
         centerTitle: true,
-        backgroundColor: bgColor,
+        backgroundColor: themeColor,
         elevation: 0.0,
         // add a sign in button on the right side
         actions: [
@@ -213,7 +213,7 @@ class _RecorderState extends State<Recorder> {
                                       // add elevation
                                       boxShadow: [
                                         BoxShadow(
-                                          color: bgColor.withOpacity(0.5),
+                                          color: themeColor.withOpacity(0.5),
                                           spreadRadius: 1,
                                           blurRadius: 3,
                                           offset: Offset(0,
@@ -231,7 +231,7 @@ class _RecorderState extends State<Recorder> {
                                         _isPaused
                                             ? Icons.play_arrow
                                             : Icons.pause,
-                                        color: bgColor,
+                                        color: themeColor,
                                         size: 30,
                                       ),
                                       // child: Text(_isPaused ? 'Resume' : 'Pause'),
@@ -245,14 +245,14 @@ class _RecorderState extends State<Recorder> {
                               onTap: !_isRecording ? _startRecording : null,
                               child: AvatarGlow(
                                 animate: !_isPaused && _isRecording,
-                                glowColor: bgColor,
+                                glowColor: themeColor,
                                 endRadius: 100.0, // Adjust the glow size
                                 duration: Duration(milliseconds: 2000),
                                 repeatPauseDuration:
                                     Duration(milliseconds: 100),
                                 repeat: true,
                                 child: CircleAvatar(
-                                  backgroundColor: bgColor,
+                                  backgroundColor: themeColor,
                                   radius: 60, // Increase the avatar radius
                                   child: Icon(Icons.mic,
                                       color: Colors.white,
@@ -269,7 +269,7 @@ class _RecorderState extends State<Recorder> {
                                       // add elevation
                                       boxShadow: [
                                         BoxShadow(
-                                          color: bgColor.withOpacity(0.5),
+                                          color: themeColor.withOpacity(0.5),
                                           spreadRadius: 1,
                                           blurRadius: 3,
                                           offset: Offset(0,
@@ -284,17 +284,12 @@ class _RecorderState extends State<Recorder> {
                                           _isRecording ? _stopRecording : null,
                                       icon: Icon(
                                         Icons.stop,
-                                        color: bgColor,
+                                        color: themeColor,
                                         size: 30,
                                       ),
                                     ),
                                   )
                                 : Container()
-
-                            // ElevatedButton(
-                            //   onPressed: _isRecording ? _stopRecording : null,
-                            //   child: Text('Stop'),
-                            // ),
                           ],
                         ),
 
@@ -310,7 +305,7 @@ class _RecorderState extends State<Recorder> {
                             minimumSize: Size(300, 50),
                             maximumSize: Size(600, 100),
                             foregroundColor: textColor,
-                            backgroundColor: bgColor,
+                            backgroundColor: themeColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             ),
@@ -329,14 +324,44 @@ class _RecorderState extends State<Recorder> {
                                             pathToRecorded!);
                                         String gptResponseText =
                                             await generateNote(value);
-                                        saveNoteAndQuestion(gptResponseText);
+                                        if (gptResponseText == '') {
+                                          throw Exception(
+                                              'Note generation failed');
+                                        }
+                                        if (gptResponseText == '') {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: themeColor,
+                                              content: Text(
+                                                  'Could\'t generate note!'),
+                                            ),
+                                          );
+                                          throw Exception(
+                                              'Note generation failed');
+                                        }
+
+                                        final saveStatus = saveNoteAndQuestion(
+                                            gptResponseText);
+                                        if (saveStatus == 0) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              backgroundColor: themeColor,
+                                              content: Text(
+                                                  'Could\'t save note. Please regenerate note!'),
+                                            ),
+                                          );
+                                          throw Exception(
+                                              'Note generation failed');
+                                        }
 
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            backgroundColor: bgColor,
+                                            backgroundColor: themeColor,
                                             content: Text(
-                                                'Note has been generated successfully'),
+                                                'Note has been generated successfully!'),
                                           ),
                                         );
                                       } catch (e) {
@@ -344,10 +369,12 @@ class _RecorderState extends State<Recorder> {
                                             .showSnackBar(
                                           SnackBar(
                                             backgroundColor: Colors.red[700],
-                                            content:
-                                                Text('Couldn\'t generate note'),
+                                            content: Text(
+                                                'Couldn\'t generate note!'),
                                           ),
                                         );
+                                        throw Exception(
+                                            'Note generation failed for unknown reason');
                                       } finally {
                                         setState(() {
                                           _isGeneratingNote =
@@ -359,7 +386,7 @@ class _RecorderState extends State<Recorder> {
                             'Generate Short Note',
                             style: TextStyle(
                               // give it a font size
-                              fontSize: 20,
+                              fontSize: 18,
                             ),
                           ),
                         ),
@@ -410,7 +437,7 @@ class _RecorderState extends State<Recorder> {
               color: Colors.black.withOpacity(0.5),
               child: Center(
                 child: CircularProgressIndicator(
-                  color: bgColor,
+                  color: themeColor,
                 ),
               ),
             ),
