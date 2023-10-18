@@ -43,6 +43,7 @@ class _NoteViewState extends State<NoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          
           elevation: 0.0,
           title: Text('${widget.topicTitle}'),
           backgroundColor: themeColor,

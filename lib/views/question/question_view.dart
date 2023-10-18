@@ -68,9 +68,11 @@ class _QuestionViewState extends State<QuestionView> {
                       10), // This will make the corners rounded
                 ),
                 margin: EdgeInsets.symmetric(
-                    horizontal: 16,
+                    horizontal: 8,
                     vertical: 8), // Add some margin around the card
                 child: ExpansionTile(
+                  expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                  expandedAlignment: Alignment.topLeft,
                   // change the text color on expansion
                   textColor: Colors.black,
                   iconColor: themeColor,
@@ -81,7 +83,7 @@ class _QuestionViewState extends State<QuestionView> {
                   title: Text("${index + 1}. ${question.question}"),
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 20, 24, 30),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment:
                             CrossAxisAlignment.start, // Aligns text to the left
@@ -94,9 +96,10 @@ class _QuestionViewState extends State<QuestionView> {
                           SizedBox(height: 15.0),
                           Text(question.answer,
                               style: TextStyle(
-                                  color: themeColor,
-                                  fontSize:
-                                      16)), // Assuming 'question' is defined in this scope
+                                  color: Colors.green,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight
+                                      .bold)), // Assuming 'question' is defined in this scope
                         ],
                       ),
                     ),
