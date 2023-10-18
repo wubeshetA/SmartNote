@@ -3,9 +3,10 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
+import 'package:smartnote/views/question/question_view.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
-import 'note.dart';
+import 'note_view.dart';
 
 class Notes extends StatefulWidget {
   const Notes({Key? key}) : super(key: key);
@@ -71,26 +72,79 @@ class _NotesState extends State<Notes> {
                 itemBuilder: (context, index) {
                   final data = snapshot.data![index];
                   return InkWell(
-                    onTap: () {
-                      // Push to a new screen or redirect as needed
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NoteWebViewContainer(
-                                  htmlFilePath: data.notes)));
-                    },
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            child: ListTile(
-                              title: Text(data.title),
-                              subtitle: Text(data.created_at.toString()),
-                              trailing: Icon(Icons.question_answer_outlined),
+                    child: Padding(
+                      // Added Padding for better spacing
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                // Rounded corners for the Card
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation:
+                                  1, // Shadow effect for a touch of depth
+                              child: ListTile(
+                                contentPadding: EdgeInsets.symmetric(
+                                  // Added padding for better structure
+                                  vertical: 5,
+                                  horizontal: 15,
+                                ),
+                                title: GestureDetector(
+                                  onTap: () {
+                                    // Push to a new screen or redirect as needed
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => NoteView(
+                                                  htmlFilePath: data.notes,
+                                                  topicTitle: data.title,
+                                                )));
+                                  },
+                                  child: Text(
+                                    data.title,
+                                    style: TextStyle(
+                                      // Added TextStyle for custom font styling
+                                      fontSize: 18,
+
+                                      // fontWeight: FontWeight.,
+                                    ),
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text(
+                                    data.created_at.toString(),
+                                    style: TextStyle(
+                                      // Added TextStyle for custom font styling
+                                      fontSize: 14,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                ),
+                                trailing: GestureDetector(
+                                  onTap: () {
+                                    // Push to a new screen or redirect as needed
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => QuestionView(
+                                                jsonFilePath: data.questions,
+                                                topicTitle: data.title)));
+                                  },
+                                  child: Icon(
+                                    Icons.question_answer_rounded,
+                                    color:
+                                        themeColor, // Added color for better visibility
+                                    size: 24, // Increased icon size
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

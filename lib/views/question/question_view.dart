@@ -72,7 +72,7 @@ class _QuestionViewState extends State<QuestionView> {
                     vertical: 8), // Add some margin around the card
                 child: ExpansionTile(
                   // change the text color on expansion
-                  textColor: themeColor,
+                  textColor: Colors.black,
                   iconColor: themeColor,
                   collapsedIconColor: Colors.black,
                   collapsedTextColor: Colors.black,

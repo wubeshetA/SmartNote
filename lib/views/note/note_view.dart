@@ -3,19 +3,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
-import 'package:smartnote/views/note/notes.dart';
+import 'package:smartnote/views/note/notes_list.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class NoteWebViewContainer extends StatefulWidget {
+class NoteView extends StatefulWidget {
   final String htmlFilePath;
-  const NoteWebViewContainer({required this.htmlFilePath, Key? key})
-      : super(key: key);
+  final String topicTitle;
+  const NoteView({required this.htmlFilePath, required this.topicTitle, Key? key}) : super(key: key);
 
   @override
-  State<NoteWebViewContainer> createState() => _NoteWebViewContainerState();
+  State<NoteView> createState() => _NoteViewState();
 }
 
-class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
+class _NoteViewState extends State<NoteView> {
   late WebViewController controller;
   bool isControllerInitialized = false;
 
@@ -47,7 +47,7 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
             floating: false,
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
-              title: const Text('Notes'),
+              title: Text(widget.topicTitle.toString()),
               background: Container(color: themeColor),
             ),
           ),

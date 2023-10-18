@@ -3,13 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartnote/theme.dart';
-import 'package:smartnote/views/question/questionsList.dart';
+import 'package:smartnote/views/question/questions_list.dart';
 
 // Local imports
-import 'note/note.dart';
+import 'note/note_view.dart';
 import 'recorder/recorderScreen.dart';
-import 'note/notes.dart';
-import 'question/question.dart';
+import 'note/notes_list.dart';
+import 'question/question_view.dart';
 import 'upload.dart';
 
 class BottomNavBarNavigator extends StatefulWidget {
