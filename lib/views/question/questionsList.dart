@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
+import 'package:smartnote/views/note/note.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:smartnote/views/question/question.dart';
@@ -32,7 +33,7 @@ class _QuestionsState extends State<Questions> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Questions'),
-          backgroundColor: bgColor,
+          backgroundColor: themeColor,
           centerTitle: true,
           // leading: IconButton(
           //   //icon: Icon(Icons.arrow_back),
@@ -53,35 +54,92 @@ class _QuestionsState extends State<Questions> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No data found.'));
+              return Center(child: Text('No Saved Questions Found!'));
             } else {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final data = snapshot.data![index];
                   return InkWell(
-                    onTap: () {
-                      Navigator.push(
+  // onTap: () {
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => QuestionView(
+  //                 jsonFilePath: data.questions,
+  //                 topicTitle: data.title,
+  //               )));
+  // },
+  child: Padding( // Added Padding for better spacing
+    padding: const EdgeInsets.all(8.0),
+    child: Row(
+      children: [
+        Expanded(
+          child: Card(
+            shape: RoundedRectangleBorder( // Rounded corners for the Card
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 1, // Shadow effect for a touch of depth
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric( // Added padding for better structure
+                vertical: 5,
+                horizontal: 15,
+              ),
+              title: GestureDetector(
+                onTap: () {
+                  // Push to a new screen or redirect as needed
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => QuestionView(
+                                jsonFilePath: data.questions,
+                                topicTitle: data.title,
+                              )));
+                },
+                child: Text(
+                  data.title,
+                  style: TextStyle( // Added TextStyle for custom font styling
+                    fontSize: 18,
+              
+                    // fontWeight: FontWeight.,
+                  ),
+                ),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  
+                  data.created_at.toString(),
+                  style: TextStyle( // Added TextStyle for custom font styling
+                    fontSize: 14,
+                    color: Colors.grey[700],
+              
+                  ),
+                ),
+              ),
+              trailing: GestureDetector(
+                onTap:() {
+                  // Push to a new screen or redirect as needed
+                 Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => QuestionView(
-                                    jsonFilePath: data.questions,
-                                  )));
-                    },
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Card(
-                            child: ListTile(
-                              title: Text(data.title),
-                              subtitle: Text(data.created_at.toString()),
-                              trailing: Icon(Icons.question_answer_outlined),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                              builder: (context) => NoteWebViewContainer(
+                                  htmlFilePath: data.notes)));
+                },
+                child: Icon(
+                  Icons.note,
+                  color: themeColor, // Added color for better visibility
+                  size: 24, // Increased icon size
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  ),
+);
+
                 },
               );
             }

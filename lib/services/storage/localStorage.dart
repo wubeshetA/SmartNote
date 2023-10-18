@@ -6,7 +6,12 @@ import 'dart:convert';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 
 List<String> splitText(String text) {
-  return text.split("----------");
+  try {
+    return text.split("----------");
+  } catch (e) {
+    print(e);
+    return [];
+  }
 }
 
 Future<String> readFileContent(String filePath) async {
@@ -24,21 +29,23 @@ Future<String> readFileContent(String filePath) async {
   return content;
 }
 
-
-
-void saveNoteAndQuestion(String text) async {
+Future<int> saveNoteAndQuestion(String text) async {
   final splitedText = splitText(text);
+  if (splitedText.length < 3) {
+    print("============ ERROR IN SPLITTING TEXT =============");
+    print("legth of splited text: ${splitedText.length} but 3 were expected");
+    return 0;
+  }
   final noteContent = splitedText[0].toString();
   var questionContent = splitedText[1].toString();
   final title = splitedText[2];
-  print("====================splited content ====================");
-  print(questionContent);
-  print("type of question: ${questionContent.runtimeType}");
-  print("===========");
-  print(noteContent);
-  print("================================");
-  print(title);
-  print("====================splited content ends here ====================");
+  // print("====================splited content ====================");
+  // print("questions: $questionContent");
+  // print("===========");
+  // print(noteContent);
+  // print("================================");
+  // print(title);
+  // print("====================splited content ends here ====================");
   var questionList = json.decode(questionContent);
 
   final directory = await getApplicationDocumentsDirectory();
@@ -63,7 +70,6 @@ void saveNoteAndQuestion(String text) async {
     'notes': notePath,
     'questions': questionPath,
     'title': title,
-    
   }).then((value) async {
     await Directory('${directory.path}/notes/').create(recursive: true);
     await Directory('${directory.path}/questions/').create(recursive: true);
@@ -81,7 +87,5 @@ void saveNoteAndQuestion(String text) async {
 
     print("======================= Save all log ends here ================");
   });
+  return 1;
 }
-
-
-

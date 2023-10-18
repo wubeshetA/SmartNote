@@ -6,7 +6,10 @@ import 'package:smartnote/theme.dart';
 
 class QuestionView extends StatefulWidget {
   final String jsonFilePath;
-  const QuestionView({required this.jsonFilePath, Key? key}) : super(key: key);
+  final String topicTitle;
+  const QuestionView(
+      {required this.jsonFilePath, required this.topicTitle, Key? key})
+      : super(key: key);
 
   @override
   _QuestionViewState createState() => _QuestionViewState();
@@ -36,8 +39,9 @@ class _QuestionViewState extends State<QuestionView> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Questions'),
-          backgroundColor: bgColor,
+          elevation: 0.0,
+          title: Text('${widget.topicTitle}'),
+          backgroundColor: themeColor,
           centerTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -50,31 +54,57 @@ class _QuestionViewState extends State<QuestionView> {
             ),
           ],
         ),
-        body: ListView.builder(
-          itemCount: questions.length,
-          itemBuilder: (context, index) {
-            final question = questions[index];
-            return Card(
-              child: ExpansionTile(
-                title: Text("$index: ${question.question}"),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start, // aligns text to the left
-                      children: [
-                        Text("Answer:"),
-                        SizedBox(height: 10.0),
-                        Text(question
-                            .answer), // Assuming 'question' is defined in this scope.
-                      ],
+        body: Container(
+          color: partialWhiteBgColor,
+          child: ListView.builder(
+            itemCount: questions.length,
+            itemBuilder: (context, index) {
+              final question = questions[index];
+              return Card(
+                color: whiteBgColor,
+                elevation: 0, // This will remove the shadow
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                      10), // This will make the corners rounded
+                ),
+                margin: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8), // Add some margin around the card
+                child: ExpansionTile(
+                  // change the text color on expansion
+                  textColor: themeColor,
+                  iconColor: themeColor,
+                  collapsedIconColor: Colors.black,
+                  collapsedTextColor: Colors.black,
+                  tilePadding:
+                      EdgeInsets.all(16), // Add some padding to the title
+                  title: Text("${index + 1}. ${question.question}"),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 20, 24, 30),
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start, // Aligns text to the left
+                        children: [
+                          Text("Answer:",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight
+                                      .bold)), // Made the "Answer:" text bold for better visual distinction
+                          SizedBox(height: 15.0),
+                          Text(question.answer,
+                              style: TextStyle(
+                                  color: themeColor,
+                                  fontSize:
+                                      16)), // Assuming 'question' is defined in this scope
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       );
 }

@@ -34,7 +34,7 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        color: bgColor,
+        color: themeColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: GNav(

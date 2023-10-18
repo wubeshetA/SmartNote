@@ -48,7 +48,7 @@ class _NoteWebViewContainerState extends State<NoteWebViewContainer> {
             pinned: false,
             flexibleSpace: FlexibleSpaceBar(
               title: const Text('Notes'),
-              background: Container(color: bgColor),
+              background: Container(color: themeColor),
             ),
           ),
           SliverToBoxAdapter(
