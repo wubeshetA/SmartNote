@@ -41,7 +41,7 @@ Join us in refining and expanding SmartNote! Your insights and contributions are
 
 ## Deployement
 
-Please keep an eye out; the app will soon be deployed on Playstore.
+Please keep an eye out; the app will soon be on Playstore very soon.
 
 
 ---
