@@ -39,4 +39,8 @@ In the traditional setting, students juggle between listening and note-taking, o
 
 Join us in refining and expanding SmartNote! Your insights and contributions are valuable in making education accessible and engaging for everyone. Kindly refer to our [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to be a part of this innovative journey.
 
+## Deployement
+
+Please keep your eye out as the app will be on Playstore very soon.
+
 ---
