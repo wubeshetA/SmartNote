@@ -43,4 +43,5 @@ Join us in refining and expanding SmartNote! Your insights and contributions are
 
 Please keep an eye out; the app will soon be deployed on Playstore.
 
+
 ---
