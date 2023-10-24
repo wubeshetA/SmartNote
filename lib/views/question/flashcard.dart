@@ -40,8 +40,8 @@ class AnswerFlashCard extends StatelessWidget {
         child: Text(
           this.text,
           textAlign: TextAlign.start,
-          style: TextStyle(fontSize: 20, color: Colors.green
-              // fontWeight: FontWeight.bold
+          style: TextStyle(fontSize: 20, color: Colors.green,
+              fontWeight: FontWeight.bold
               ),
         ),
       )),
