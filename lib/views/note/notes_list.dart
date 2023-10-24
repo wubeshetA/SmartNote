@@ -1,11 +1,10 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/question_view.dart';
 
-import 'package:webview_flutter/webview_flutter.dart';
 import 'note_view.dart';
 
 class Notes extends StatefulWidget {

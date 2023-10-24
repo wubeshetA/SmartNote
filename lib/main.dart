@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:smartnote/services/storage/localStorage.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/views/splash_screen.dart';
 import 'views/bottom_navigator.dart';
@@ -18,6 +20,15 @@ void main() async {
 
   // remove database
   // db.deleteAll();
+
+  // Add mock data
+  // saveNoteAndQuestion(await rootBundle.loadString('assets/mock_data.html'))
+  //     .then((value) => print(value))
+  //     .onError((error, stackTrace) {
+  //   print("Error while saving mockdata");
+  //   print(error);
+  // });
+
   print("=============== ALL DATA IN DB ===================");
   print(all_data);
   print("=================PRINT ALL DATA IN DB ENDS HERE===================");

@@ -48,6 +48,7 @@ dependencies:
   http: ^1.1.0
   google_speech: ^4.1.0
   sqflite: ^2.3.0
+  flip_card: ^0.7.0
 
 dev_dependencies:
   flutter_test:
