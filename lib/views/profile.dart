@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smartnote/models/user.dart';
 import 'package:smartnote/services/auth_services.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -8,9 +10,11 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   AuthService authService = AuthService();
+  // get user
 
   @override
   Widget build(BuildContext context) {
+  UserModel? user = Provider.of<UserModel?>(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -21,7 +25,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Text(
-                "Hi, Name", // replace with the actual user's name
+                "Hi, ${user!.displayName}", // replace with the actual user's name
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,

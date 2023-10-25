@@ -12,7 +12,7 @@ class AuthService {
     return UserModel(
       uid: user.uid,
       email: user.email,
-      // displayName: user.displayName,
+      displayName: user.displayName,
       // photoURL: user.photoURL,
     );
   }
@@ -20,6 +20,12 @@ class AuthService {
   // Stream to listen to user authentication changes
   Stream<UserModel?> get user {
     return _auth.authStateChanges().map(_fromFirebaseUser);
+  }
+
+  // return current user
+  UserModel? get currentUser {
+    final User? user = _auth.currentUser;
+    return _fromFirebaseUser(user);
   }
 
   // Sign up with email and password
@@ -54,20 +60,20 @@ class AuthService {
   }
 
   // Sign out
- Future<void> signOut() async {
-  final User? currentUser = _auth.currentUser;
+  Future<void> signOut() async {
+    final User? currentUser = _auth.currentUser;
 
-  if (currentUser != null) {
-    for (UserInfo info in currentUser.providerData) {
-      if (info.providerId == 'google.com') { // Google Sign-in
-        await GoogleSignIn().signOut();
+    if (currentUser != null) {
+      for (UserInfo info in currentUser.providerData) {
+        if (info.providerId == 'google.com') {
+          // Google Sign-in
+          await GoogleSignIn().signOut();
+        }
       }
     }
+
+    await _auth.signOut();
   }
-
-  await _auth.signOut();
-}
-
 
   Future<UserModel?> signInWithGoogle() async {
     try {

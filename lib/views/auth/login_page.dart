@@ -18,12 +18,18 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  bool _loading = false;
+  bool _emailSignInLoading = false;
+  bool _googleSignInLoading = false;
 
   AuthService authService = AuthService();
   void signIn() async {
+    // if there is signed in user, sign out
+    if (authService.currentUser != null) {
+      await authService.signOut();
+    }
+
     setState(() {
-      _loading = true; // start loading
+      _emailSignInLoading = true; // start loading
     });
 
     await authService
@@ -31,28 +37,34 @@ class _LoginPageState extends State<LoginPage> {
             _emailController.text.trim(), _passwordController.text.trim())
         .then((value) {
       setState(() {
-        _loading = false; // stop loading after sign-in
+        _emailSignInLoading = false; // stop loading after sign-in
       });
-      Navigator.pushNamed(context, '/main');
+      if (value != null) {
+        print("User is not null--------- ${value}");
+        Navigator.pushNamed(context, '/main');
+      } else {
+        print("User is null--------- ${value}");
+      }
+      return value;
+      // Navigator.pushNamed(context, '/main');
     });
   }
 
   void signInWithGoogle() async {
     setState(() {
-      _loading = true; // start loading
+      _googleSignInLoading = true; // start loading
     });
     UserModel? user = await authService.signInWithGoogle().then((value) {
       setState(() {
-        _loading = false; // stop loading after sign-in
+        _googleSignInLoading = false; // stop loading after sign-in
       });
-      Navigator.pushNamed(context, '/main');
+      if (value != null) {
+        print("User is not null--------- ${value}");
+        Navigator.pushNamed(context, '/main');
+      } else {
+        print("User is null--------- ${value}");
+      }
     });
-
-    if (user != null) {
-      Navigator.pushNamed(context, '/main');
-    } else {
-      // Handle error, show feedback to the user
-    }
   }
 
   @override
@@ -141,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 GestureDetector(
-                  onTap: _loading ? null : () => signIn(),
+                  onTap: _emailSignInLoading ? null : () => signIn(),
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Container(
@@ -150,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: themeColor,
                             borderRadius: BorderRadius.circular(12.0)),
                         child: Center(
-                            child: _loading
+                            child: _emailSignInLoading
                                 ? CircularProgressIndicator(
                                     valueColor:
                                         AlwaysStoppedAnimation(Colors.white))
@@ -199,22 +211,21 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: Center(
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 10.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Image.asset(
                                   "assets/google_icon.png",
                                   height: 30,
                                   width: 30,
                                 ),
                               ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              _loading
+                              _googleSignInLoading
                                   ? CircularProgressIndicator(
                                       valueColor:
-                                          AlwaysStoppedAnimation(Colors.white))
+                                          AlwaysStoppedAnimation(themeColor))
                                   : Text(
                                       "Continue with Google",
                                       style: themeFontFamily.copyWith(
@@ -222,6 +233,9 @@ class _LoginPageState extends State<LoginPage> {
                                         fontSize: 16,
                                       ),
                                     ),
+                              SizedBox(
+                                width: 20,
+                              ),
                             ],
                           ),
                         ),

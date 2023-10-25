@@ -164,12 +164,31 @@ class _RecorderState extends State<Recorder> {
               try {
                 // await authService.signOut();
                 // Navigator.pop(context);
-                Navigator.pushNamed(context, '/profile');
+                if (user == null) {
+                  Navigator.pushNamed(context, '/login');
+                  // return;
+                } else {
+                  Navigator.pushNamed(context, '/profile');
+                }
               } catch (e) {
                 print(e);
               }
             },
-            icon: user != null ? Icon(Icons.person) : Icon(Icons.login),
+            icon: user != null ? 
+            // add avatar that displays the first letter of the user's name
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text(
+                user!.displayName!.substring(0, 1).toUpperCase(),
+                style: TextStyle(
+                  color: themeColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ) 
+            
+             : Icon(Icons.login),
           ),
         ],
       ),
