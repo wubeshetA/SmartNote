@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to the Sign In screen
-                Navigator.pushNamed(context, '/signin');
+                Navigator.pushNamed(context, '/login');
               },
               child: Text(
                 'Sign In',

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smartnote/services/storage/localStorage.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/views/auth/login_page.dart';
 import 'package:smartnote/views/splash_screen.dart';
 import 'views/bottom_navigator.dart';
 import 'views/note/note_view.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
             htmlFilePath: 'path_to_your_html_file.html',
             topicTitle: 'Topic Title'),
         '/main': (context) => BottomNavBarNavigator(),
+        '/login': (context) => LoginPage(),
       },
       // remove debug banner
       debugShowCheckedModeBanner: false,
