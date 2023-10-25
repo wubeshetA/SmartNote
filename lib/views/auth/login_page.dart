@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smartnote/models/user.dart';
+import 'package:smartnote/services/auth_services.dart';
 import 'package:smartnote/theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,6 +13,35 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  bool _loading = false;
+
+  AuthService authService = AuthService();
+  void signIn() async {
+    setState(() {
+      _loading = true; // start loading
+    });
+
+    await authService
+        .signInWithEmailAndPassword(
+            _emailController.text.trim(), _passwordController.text.trim())
+        .then((value) {
+      setState(() {
+        _loading = false; // stop loading after sign-in
+      });
+      Navigator.pushNamed(context, '/main');
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +83,10 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(12.0)),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.only(left: 20.0),
                         child: TextField(
+                          controller: _emailController,
                           decoration: InputDecoration(
                               hintText: "Email", border: InputBorder.none),
                         ),
@@ -70,9 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: BoxDecoration(
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(12.0)),
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.only(left: 20.0),
                         child: TextField(
+                          controller: _passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                               hintText: "Password", border: InputBorder.none),
@@ -86,23 +120,30 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
 
-                Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Container(
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                          color: themeColor,
-                          borderRadius: BorderRadius.circular(12.0)),
-                      child: Center(
-                        child: Text(
-                          "Sign In",
-                          style: themeFontFamily.copyWith(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )),
+                GestureDetector(
+                  onTap: _loading ? null : () => signIn(),
+
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Container(
+                        padding: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            color: themeColor,
+                            borderRadius: BorderRadius.circular(12.0)),
+                        child: Center(
+                            child: _loading
+                                ? CircularProgressIndicator(
+                                    valueColor:
+                                        AlwaysStoppedAnimation(Colors.white))
+                                : Text(
+                                    "Sign In",
+                                    style: themeFontFamily.copyWith(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                      )),
+                ),
 
                 SizedBox(
                   height: 30,
