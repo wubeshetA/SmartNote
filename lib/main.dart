@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:smartnote/services/storage/localStorage.dart';
 import 'package:smartnote/services/storage/sqlite_db_helper.dart';
 import 'package:smartnote/views/auth/login_page.dart';
+import 'package:smartnote/views/auth/signup_page.dart';
 import 'package:smartnote/views/splash_screen.dart';
 import 'views/bottom_navigator.dart';
 import 'views/note/note_view.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
             topicTitle: 'Topic Title'),
         '/main': (context) => BottomNavBarNavigator(),
         '/login': (context) => LoginPage(),
+        '/signup': (context) => SignupPage(),
       },
       // remove debug banner
       debugShowCheckedModeBanner: false,

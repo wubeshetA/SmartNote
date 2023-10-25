@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smartnote/theme.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.white,
-        //   elevation: 0,
-        // ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.white,
+      //   elevation: 0,
+      // ),
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Center(
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50,
                 ),
                 // Hello gain!
-                Text("Sign in to access your notes anywhere",
+                Text("Sign Up to access your notes anywhere",
                     style: themeFontFamily.copyWith(
                         color: Colors.grey[800],
                         fontSize: 16,
@@ -44,6 +44,23 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 30,
                 ),
+
+                Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 20.0),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              hintText: "Name", border: InputBorder.none),
+                        ),
+                      ),
+                    )),
+
+                SizedBox(height: 10.0),
                 // email textfield
                 Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -95,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(12.0)),
                       child: Center(
                         child: Text(
-                          "Sign In",
+                          "Sign Up",
                           style: themeFontFamily.copyWith(
                               color: Colors.white,
                               fontSize: 18,
@@ -109,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 Text(
-                  "or Sign In with",
+                  "or Sign Up with",
                   style: themeFontFamily.copyWith(
                       color: Colors.grey[500], fontSize: 15),
                 ),
@@ -175,11 +192,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Navigate to the Sign Up screen
-                        Navigator.pushNamed(context, '/signup');
+                        Navigator.pushNamed(context, '/login');
                       },
                       child: Text(
-                        "Sign Up",
+                        "Sign In",
                         style: themeFontFamily.copyWith(
                             color: themeColor,
                             fontSize: 15,
