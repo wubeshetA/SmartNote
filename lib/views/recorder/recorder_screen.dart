@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'package:smartnote/models/user.dart';
 import 'package:smartnote/services/storage/localStorage.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeAI.dart';
@@ -145,18 +147,48 @@ class _RecorderState extends State<Recorder> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel?>(context);
     return Scaffold(
       appBar: AppBar(
         // title: Text('Recorder'),
-        title: Text('Record'),
+        title: user != null ? Text('Record ${user!.email}') : Text('Record'),
         centerTitle: true,
         backgroundColor: themeColor,
         elevation: 0.0,
         // add a sign in button on the right side
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.login),
+            onPressed: () {
+              // Navigate to the SplashScreen
+              // remove the current navigated screen
+              try {
+                // await authService.signOut();
+                // Navigator.pop(context);
+                if (user == null) {
+                  Navigator.pushNamed(context, '/login');
+                  // return;
+                } else {
+                  Navigator.pushNamed(context, '/profile');
+                }
+              } catch (e) {
+                print(e);
+              }
+            },
+            icon: user != null ? 
+            // add avatar that displays the first letter of the user's name
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text(
+                user!.displayName!.substring(0, 1).toUpperCase(),
+                style: TextStyle(
+                  color: themeColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ) 
+            
+             : Icon(Icons.login),
           ),
         ],
       ),

@@ -7,7 +7,7 @@ import 'package:smartnote/views/question/questions_list.dart';
 
 // Local imports
 import 'note/note_view.dart';
-import 'recorder/recorderScreen.dart';
+import 'recorder/recorder_screen.dart';
 import 'note/notes_list.dart';
 import 'question/question_view.dart';
 import 'upload.dart';

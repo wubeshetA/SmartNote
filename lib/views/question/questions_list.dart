@@ -20,6 +20,17 @@ class _QuestionsState extends State<Questions> {
   void initState() {
     super.initState();
     all_data = fetchData();
+    // read mock_notes.html from assets folder
+
+    // all_data.then((list) {
+    //   list.add(DataNote(
+    //       id: 200,
+    //       notes: 'assets/mock_notes.html',
+    //       questions: 'assets/mock_questions.json',
+    //       title: 'Microbiology',
+    //       created_at: '2023-10-19 16:27:52'));
+    // });
+    // add additional mock data to the list
   }
 
   Future<List<DataNote>> fetchData() async {
@@ -118,10 +129,10 @@ class _QuestionsState extends State<Questions> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                NoteView(
-                                                    htmlFilePath: data.notes,
-                                                    topicTitle: data.title,)));
+                                            builder: (context) => NoteView(
+                                                  htmlFilePath: data.notes,
+                                                  topicTitle: data.title,
+                                                )));
                                   },
                                   child: Icon(
                                     Icons.note,

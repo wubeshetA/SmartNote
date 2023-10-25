@@ -48,6 +48,16 @@ dependencies:
   http: ^1.1.0
   google_speech: ^4.1.0
   sqflite: ^2.3.0
+  flip_card: ^0.7.0
+  google_fonts: ^6.1.0
+  firebase_core: ^2.20.0
+  firebase_auth: ^4.12.0
+  firebase_storage: ^11.4.0
+  cloud_firestore: ^4.12.0
+  firebase_database: ^10.3.2
+  firebase_analytics: ^10.6.2
+  provider: ^6.0.5
+  google_sign_in: ^6.1.5
 
 dev_dependencies:
   flutter_test:

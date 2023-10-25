@@ -7,7 +7,9 @@ final OPENAI_API_KEY = dotenv.env['OPENAI_API_KEY']!;
 const openaiApiUrl = 'https://api.openai.com/v1/chat/completions';
 
 const noteGeneratorPrompt = '''
-Create structured short notes in HTML and questions in JSON from the provided unstructured text. Use HTML tags like 'b', 'mark', and headers for emphasis and organization, with nested 'ul' for topics. Separate notes and questions with "----------" and end with another "----------" followed by a title for the note.
+The given text is a transcription of the audio recording of educational content.
+Generate shortnotes(summaries) from the text that will be important for students to prepare for exams regarding the topic.
+Format the notes using different html tags such as <b>, <mark>, heardings, <ul> to make the notes well strucuture and emphasis on important words and phrases. There should be at least 2 important words or phrases with <mark> tag. After the notes add "----------" as separator on a new line and generate five to ten questions relevant to the content in JSON format. After the questions add "----------" on a new line and add a title for the note.
 
 Example Output:
 
@@ -21,7 +23,13 @@ Example Output:
     <ul>
         <li><b>Point 1</b></li>
         <li><mark>Point 2</mark></li>
+        
     </ul>
+    <ul>
+    <h3>Subtopic</h3>
+        <li><b>Point 3</b></li>
+
+        <li><mark>Point 4</mark></li>
   </ul>
 </body>
 </html>

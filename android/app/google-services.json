@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "226748629083",
+    "project_id": "smart-note-d885d",
+    "storage_bucket": "smart-note-d885d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226748629083:android:50d9ed2a663b2ad5673f7e",
+        "android_client_info": {
+          "package_name": "com.example.smartnote"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ-ax6rm3MM75f3h83m88sV0OwYacWHno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
