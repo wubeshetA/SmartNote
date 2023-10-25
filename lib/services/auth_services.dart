@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:smartnote/models/user.dart';
 
 class AuthService {
@@ -53,12 +54,48 @@ class AuthService {
   }
 
   // Sign out
-  Future<void> signOut() async {
+ Future<void> signOut() async {
+  final User? currentUser = _auth.currentUser;
+
+  if (currentUser != null) {
+    for (UserInfo info in currentUser.providerData) {
+      if (info.providerId == 'google.com') { // Google Sign-in
+        await GoogleSignIn().signOut();
+      }
+    }
+  }
+
+  await _auth.signOut();
+}
+
+
+  Future<UserModel?> signInWithGoogle() async {
     try {
-      return await _auth.signOut();
+      final GoogleSignInAccount? googleSignInAccount =
+          await GoogleSignIn().signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
+
+        final UserCredential authResult =
+            await _auth.signInWithCredential(credential);
+        final User? user = authResult.user;
+
+        return _fromFirebaseUser(user);
+      }
     } catch (error) {
-      print(error.toString());
+      print(error);
       return null;
     }
   }
+
+  // Future<void> signOutWithGoogle() async {
+  //   await GoogleSignIn().signOut();
+  // }
 }

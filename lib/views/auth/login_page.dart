@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,6 +35,24 @@ class _LoginPageState extends State<LoginPage> {
       });
       Navigator.pushNamed(context, '/main');
     });
+  }
+
+  void signInWithGoogle() async {
+    setState(() {
+      _loading = true; // start loading
+    });
+    UserModel? user = await authService.signInWithGoogle().then((value) {
+      setState(() {
+        _loading = false; // stop loading after sign-in
+      });
+      Navigator.pushNamed(context, '/main');
+    });
+
+    if (user != null) {
+      Navigator.pushNamed(context, '/main');
+    } else {
+      // Handle error, show feedback to the user
+    }
   }
 
   @override
@@ -122,7 +142,6 @@ class _LoginPageState extends State<LoginPage> {
 
                 GestureDetector(
                   onTap: _loading ? null : () => signIn(),
-
                   child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Container(
@@ -174,28 +193,37 @@ class _LoginPageState extends State<LoginPage> {
                           color: whiteBgColor,
                           borderRadius: BorderRadius.circular(12.0)),
                       // a
-                      child: Center(
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10.0),
-                              child: Image.asset(
-                                "assets/google_icon.png",
-                                height: 30,
-                                width: 30,
+                      child: GestureDetector(
+                        onTap: () {
+                          signInWithGoogle();
+                        },
+                        child: Center(
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Image.asset(
+                                  "assets/google_icon.png",
+                                  height: 30,
+                                  width: 30,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "Continue with Google",
-                              style: themeFontFamily.copyWith(
-                                color: Colors.black,
-                                fontSize: 16,
+                              SizedBox(
+                                width: 20,
                               ),
-                            ),
-                          ],
+                              _loading
+                                  ? CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.white))
+                                  : Text(
+                                      "Continue with Google",
+                                      style: themeFontFamily.copyWith(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                            ],
+                          ),
                         ),
                       ),
                     )),
