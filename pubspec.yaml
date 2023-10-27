@@ -48,6 +48,8 @@ dependencies:
   http: ^1.1.0
   google_speech: ^4.1.0
   sqflite: ^2.3.0
+  flutter_ffmpeg: ^0.4.2
+  process_run: ^0.13.2
 
 dev_dependencies:
   flutter_test:
