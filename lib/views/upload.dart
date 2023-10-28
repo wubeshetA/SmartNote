@@ -195,11 +195,33 @@ class _UploadPageState extends State<Upload> {
             if (_isGeneratingNote)
               // Loading overlay
               Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: themeColor,
-                  ),
+                color: Colors.black.withOpacity(0.6),
+                child: const Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // add
+                      children: [
+                        SizedBox(height: 200),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Hang tight! Generating your note...',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                        CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+
+                        SizedBox(height: 40),
+
+                        // show progress with text
+                      ]),
                 ),
               ),
           ],
