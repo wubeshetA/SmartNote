@@ -1,12 +1,17 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/models/noteAndQuestion.dart';
+import 'package:smartnote/services/helper_function.dart';
+import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
-import 'package:smartnote/views/note/notes_list.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+
 class NoteView extends StatefulWidget {
+
+  
   final String htmlFilePath;
   final String topicTitle;
   const NoteView(
@@ -18,6 +23,8 @@ class NoteView extends StatefulWidget {
 }
 
 class _NoteViewState extends State<NoteView> {
+
+  User? user = FirebaseAuth.instance.currentUser;
   late WebViewController controller;
   bool isControllerInitialized = false;
 
@@ -26,9 +33,20 @@ class _NoteViewState extends State<NoteView> {
     return await file.readAsString();
   }
 
+  // load html content from url
+
+
   Future<void> setupWebviewContent() async {
-    String htmlContent = await loadHtmlFromFile(widget.htmlFilePath);
-    controller.loadHtmlString(htmlContent);
+    final htmlContent;
+
+    if (user != null) {
+      htmlContent = await fetchContentFromUrl(Uri.parse(widget.htmlFilePath));
+    controller.loadHtmlString(htmlContent.toString());
+    } else {
+      htmlContent = await loadHtmlFromFile(widget.htmlFilePath);
+      controller.loadHtmlString(htmlContent);
+    }
+
   }
 
   late Future<List<DataNote>> all_data;
@@ -43,7 +61,6 @@ class _NoteViewState extends State<NoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          
           elevation: 0.0,
           title: Text('${widget.topicTitle}'),
           backgroundColor: themeColor,

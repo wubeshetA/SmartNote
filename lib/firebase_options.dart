@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD4YsRKXGnf70DLVC-IafiIsx7cT19pJ1k',
-    appId: '1:226748629083:web:31a917dd398d92d0673f7e',
-    messagingSenderId: '226748629083',
-    projectId: 'smart-note-d885d',
-    authDomain: 'smart-note-d885d.firebaseapp.com',
-    storageBucket: 'smart-note-d885d.appspot.com',
-    measurementId: 'G-JPCNDV8H0V',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBZ-ax6rm3MM75f3h83m88sV0OwYacWHno',
-    appId: '1:226748629083:android:50d9ed2a663b2ad5673f7e',
+    appId: '1:226748629083:android:f05e7c93443e25e0673f7e',
     messagingSenderId: '226748629083',
     projectId: 'smart-note-d885d',
     storageBucket: 'smart-note-d885d.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAGNOm7zuNrApJF9fs-oUMuDktvejONCbY',
-    appId: '1:226748629083:ios:5ea87a9cb57d771f673f7e',
-    messagingSenderId: '226748629083',
-    projectId: 'smart-note-d885d',
-    storageBucket: 'smart-note-d885d.appspot.com',
-    iosBundleId: 'com.example.smartnote',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAGNOm7zuNrApJF9fs-oUMuDktvejONCbY',
-    appId: '1:226748629083:ios:a7a9d449f69927ae673f7e',
-    messagingSenderId: '226748629083',
-    projectId: 'smart-note-d885d',
-    storageBucket: 'smart-note-d885d.appspot.com',
-    iosBundleId: 'com.example.smartnote.RunnerTests',
   );
 }

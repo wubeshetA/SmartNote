@@ -7,12 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:226748629083:android:50d9ed2a663b2ad5673f7e",
+        "mobilesdk_app_id": "1:226748629083:android:f05e7c93443e25e0673f7e",
         "android_client_info": {
           "package_name": "com.example.smartnote"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "226748629083-0euadfkjutfl7pfperbv85lghj3g17ga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBZ-ax6rm3MM75f3h83m88sV0OwYacWHno"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226748629083-0euadfkjutfl7pfperbv85lghj3g17ga.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "226748629083-5f0vdidc1j0cfnjrgsqn512iv5o7ulsj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.smartnote"
+              }
+            }
+          ]
         }
       }
     }
