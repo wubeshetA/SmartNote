@@ -8,6 +8,7 @@ import 'package:smartnote/services/storage/local/local_storage.dart';
 import 'package:smartnote/services/transcribe.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:smartnote/theme.dart';
+import 'package:smartnote/views/widgets/appbar.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -24,10 +25,7 @@ class _UploadPageState extends State<Upload> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Upload"),
-          centerTitle: true,
-        ),
+        appBar: SmartNoteAppBar(appBarTitle: "Upload Local Recordings"),
         body: Stack(
           children: [
             Padding(
