@@ -8,6 +8,7 @@ import 'package:smartnote/services/storage/local/local_storage.dart';
 import 'package:smartnote/services/transcribe.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:smartnote/theme.dart';
+import 'package:smartnote/views/widgets/appbar.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -24,20 +25,36 @@ class _UploadPageState extends State<Upload> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Upload"),
-          centerTitle: true,
-        ),
+        appBar: SmartNoteAppBar(appBarTitle: "Upload Local Recordings"),
         body: Stack(
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter Video/Audio URL',
-                      suffixIcon: Icon(Icons.lock),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.info_outline,
+                          color: themeColor), // Info icon in theme color
+                      SizedBox(width: 10), // Spacing between the icon and text
+                      Text(
+                        'Max File Size: 7MB',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: themeColor, // Text in theme color
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5), // Vertical spacing between the two texts
+                  Text(
+                    'Supported audio formats: .m4a, .mp3, .mp4',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: themeColor, // Text in theme color
                     ),
                   ),
                   Expanded(
@@ -56,11 +73,11 @@ class _UploadPageState extends State<Upload> {
                         child: DottedBorder(
                           // You'll need the dotted_border package
                           child: Padding(
-                            padding: const EdgeInsets.all(100.0),
+                            padding: const EdgeInsets.all(90.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.upload_rounded, size: 50),
+                                Icon(Icons.cloud_upload_outlined, size: 50),
                                 Text(TofilePath == null
                                     ? "DRAG A FILE HERE"
                                     : "File Selected: ${TofilePath!.split('/').last}"),
@@ -167,10 +184,10 @@ class _UploadPageState extends State<Upload> {
                                 }
                               },
                     child: Text('Generate Short Note',
-                        style: TextStyle(
-                          // give it a font size
-                          fontSize: 18,
-                        )),
+                        style: themeFontFamily.copyWith(
+                            // give it a font size
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
@@ -178,11 +195,33 @@ class _UploadPageState extends State<Upload> {
             if (_isGeneratingNote)
               // Loading overlay
               Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: themeColor,
-                  ),
+                color: Colors.black.withOpacity(0.6),
+                child: const Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // add
+                      children: [
+                        SizedBox(height: 200),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Hang tight! Generating your note...',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                        CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+
+                        SizedBox(height: 40),
+
+                        // show progress with text
+                      ]),
                 ),
               ),
           ],
