@@ -1,7 +1,8 @@
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/models/noteAndQuestion.dart';
+import 'package:smartnote/services/storage/cloud/database_helper.dart';
+import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/question_view.dart';
 
@@ -15,6 +16,7 @@ class Notes extends StatefulWidget {
 }
 
 class _NotesState extends State<Notes> {
+  User? user = FirebaseAuth.instance.currentUser;
   // List<Note> notes = [
   //   Note(title: "Microbiology", date: DateTime.now()),
   //   Note(title: "Science", date: DateTime.now()),
@@ -22,7 +24,8 @@ class _NotesState extends State<Notes> {
   //   Note(title: "Calculus", date: DateTime.now()),
   //   Note(title: "World Economic", date: DateTime.now()),
   //   Note(title: "Arts Story", date: DateTime.now()),
-  // ];
+  // ]; htmlFilePath  htmlFilePathhtmlFilePathhtmlFilePathhtmlFhtmlFilePath
+
   late Future<List<DataNote>> all_data;
   @override
   void initState() {
@@ -31,10 +34,21 @@ class _NotesState extends State<Notes> {
   }
 
   Future<List<DataNote>> fetchData() async {
-    var dbHelper = SqliteDatabaseHelper();
-    List<Map<String, dynamic>> rawList = await dbHelper.getPaths();
+    if (user != null) {
+      var supabaseDbHelper = SupabaseDatabaseHelper();
+      List rawList = await supabaseDbHelper.getPaths();
+      print("----------------------displaying raw list-----------------");
+      print(rawList);
+      print("--------------------------------------");
+      return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+      // return await supabaseDbHelper.getPaths(user_uid)
+      //  var supabaseDbHelper = SupabaseDatabaseHelper();
+    } else {
+      var sqliteDbHelper = SqliteDatabaseHelper();
+      List<Map<String, dynamic>> rawList = await sqliteDbHelper.getPaths();
 
-    return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+      return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+    }
   }
 
   @override
@@ -197,30 +211,3 @@ class DetailScreen extends StatelessWidget {
 //     required this.created_at,
 //   });
 // }
-
-class DataNote {
-  final int
-      id; // I noticed it was a String in your example, make sure this is the right type
-  final String notes;
-  final String questions;
-  final String title;
-  final String created_at;
-
-  DataNote({
-    required this.id,
-    required this.notes,
-    required this.questions,
-    required this.title,
-    required this.created_at,
-  });
-
-  factory DataNote.fromMap(Map<String, dynamic> map) {
-    return DataNote(
-      id: map['id'],
-      notes: map['notes'],
-      questions: map['questions'],
-      title: map['title'],
-      created_at: map['created_at'],
-    );
-  }
-}

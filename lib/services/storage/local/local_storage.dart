@@ -3,7 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'dart:convert';
 
-import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 
 List<String> splitText(String text) {
   try {
@@ -29,7 +29,7 @@ Future<String> readFileContent(String filePath) async {
   return content;
 }
 
-Future<int> saveNoteAndQuestion(String text) async {
+Future<int> localSaveNoteAndQuestion(String text) async {
   final splitedText = splitText(text);
   if (splitedText.length < 3) {
     print("============ ERROR IN SPLITTING TEXT =============");

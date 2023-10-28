@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:google_speech/google_speech.dart';
@@ -9,15 +8,14 @@ Future<String> transcribeAudio(String fileName) async {
 
   // print("=============Inside the transcription=========$fileName===========");
   final audio = File(fileName).readAsBytesSync().toList();
+  print("=============Inside the transcription=========$fileName===========");
   // print("=============Inside the transcription=========$audio===========");
   final config = RecognitionConfig(
       encoding: AudioEncoding.LINEAR16,
       model: RecognitionModel.basic,
       enableAutomaticPunctuation: true,
       sampleRateHertz: 16000,
-      languageCode: 'en-US'
-      
-      );
+      languageCode: 'en-US');
 
   final serviceAccount = ServiceAccount.fromString(
       '${(await rootBundle.loadString('assets/speech_to_text.json'))}');
@@ -27,8 +25,16 @@ Future<String> transcribeAudio(String fileName) async {
   final speechToText = SpeechToText.viaServiceAccount(serviceAccount);
 
   // Recognize speech
-  final response = await speechToText.recognize(config, audio).onError(
-      (error, stackTrace) => throw Exception('Error while transcibing audio'));
+  print("===================calling speechToText.recognize");
+  final response =
+      await speechToText.recognize(config, audio).onError((error, stackTrace) {
+    print("================Error when calling speechToText.recognize");
+    print(error);
+    print("------------------");
+    print(stackTrace);
+
+    throw Exception('Error while transcibing audio');
+  });
 
   // Return transcribed text
   final trascribedText = response.results
@@ -36,7 +42,6 @@ Future<String> transcribeAudio(String fileName) async {
       .join('\n');
   // print("===================Transcribed Text====================");
   print(trascribedText);
-  
-  return trascribedText;
 
+  return trascribedText;
 }

@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/models/noteAndQuestion.dart';
+import 'package:smartnote/services/storage/cloud/database_helper.dart';
+import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/note/note_view.dart';
 import 'dart:async';
@@ -15,6 +18,8 @@ class Questions extends StatefulWidget {
 
 class _QuestionsState extends State<Questions> {
   late Future<List<DataNote>> all_data;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -34,10 +39,23 @@ class _QuestionsState extends State<Questions> {
   }
 
   Future<List<DataNote>> fetchData() async {
+    if (user != null) {
+      var supabaseDbHelper = SupabaseDatabaseHelper();
+      List rawList = await supabaseDbHelper.getPaths();
+      print("----------------------displaying raw list-----------------");
+      print(rawList);
+      print("--------------------------------------");
+      return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+      // return await supabaseDbHelper.getPaths(user_uid)
+      //  var supabaseDbHelper = SupabaseDatabaseHelper();
+    }
+    else {
+
     var dbHelper = SqliteDatabaseHelper();
     List<Map<String, dynamic>> rawList = await dbHelper.getPaths();
 
     return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+    }
   }
 
   @override
@@ -184,34 +202,8 @@ class DetailScreen extends StatelessWidget {
   }
 }
 
-void main() async {
-  var dbHelper = SqliteDatabaseHelper();
-  var paths = await dbHelper.getPaths();
-  paths.forEach((path) {});
-}
-
-class DataNote {
-  final int id;
-  final String notes;
-  final String questions;
-  final String title;
-  final String created_at;
-
-  DataNote({
-    required this.id,
-    required this.notes,
-    required this.questions,
-    required this.title,
-    required this.created_at,
-  });
-
-  factory DataNote.fromMap(Map<String, dynamic> map) {
-    return DataNote(
-      id: map['id'],
-      notes: map['notes'],
-      questions: map['questions'],
-      title: map['title'],
-      created_at: map['created_at'],
-    );
-  }
-}
+// void main() async {
+//   var dbHelper = SqliteDatabaseHelper();
+//   var paths = await dbHelper.getPaths();
+//   paths.forEach((path) {});
+// }

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smartnote/services/helper_function.dart';
 import 'dart:io';
 import 'dart:convert';
 
@@ -19,6 +21,7 @@ class QuestionView extends StatefulWidget {
 }
 
 class _QuestionViewState extends State<QuestionView> {
+  User? user = FirebaseAuth.instance.currentUser;
   List<Question> questions = [];
   int _currentCardIndex = 0;
   bool showDefaultView = true;
@@ -32,8 +35,19 @@ class _QuestionViewState extends State<QuestionView> {
   }
 
   Future<void> loadQuestionsFromFile() async {
-    final file = File(widget.jsonFilePath);
-    String jsonString = await file.readAsString();
+    String? jsonString;
+    if (user != null) {
+      var httpcontent =
+          await fetchContentFromUrl(Uri.parse(widget.jsonFilePath));
+      jsonString = httpcontent.toString();
+    } else {
+      final file = File(widget.jsonFilePath);
+      jsonString = await file.readAsString();
+    }
+
+    print("jsonString: ");
+    print(jsonString);
+
     List jsonData = jsonDecode(jsonString);
     questions = jsonData
         .map((questionData) => Question(
@@ -111,8 +125,8 @@ class _QuestionViewState extends State<QuestionView> {
                   text: questions[_currentCardIndex].question,
                   index: _currentCardIndex),
               back: AnswerFlashCard(
-                  text: questions[_currentCardIndex].answer,
-                  ),
+                text: questions[_currentCardIndex].answer,
+              ),
             ),
           ),
           SizedBox(height: 50),

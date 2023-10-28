@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -5,31 +6,40 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
 import 'package:smartnote/services/auth_services.dart';
-import 'package:smartnote/services/storage/sqlite_db_helper.dart';
+import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/views/auth/login_page.dart';
 import 'package:smartnote/views/auth/signup_page.dart';
 import 'package:smartnote/views/profile.dart';
 import 'package:smartnote/views/splash_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as Supabase;
 import 'views/bottom_navigator.dart';
 import 'views/note/note_view.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
   await dotenv.load(fileName: 'assets/.env');
-
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
+  // await FirebaseAppCheck.instance.activate(
+  //   // webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+
+  //   // Set androidProvider to `AndroidProvider.debug`
+  //   androidProvider: AndroidProvider.debug
+  // );
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
 
 // =============== playground ===============
-  SqliteDatabaseHelper db = SqliteDatabaseHelper();
-  final all_data = await db.getPaths();
+  // SqliteDatabaseHelper db = SqliteDatabaseHelper();
+  // final all_data = await db.getPaths();
+  
 
   // remove database
   // db.deleteAll();
@@ -43,7 +53,7 @@ void main() async {
   // });
 
   print("=============== ALL DATA IN DB ===================");
-  print(all_data);
+  // print(all_data);
   print("=================PRINT ALL DATA IN DB ENDS HERE===================");
 
   runApp(

@@ -8,7 +8,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
-import 'package:smartnote/services/storage/localStorage.dart';
+import 'package:smartnote/services/storage/cloud/storage_helper.dart';
+import 'package:smartnote/services/storage/local/local_storage.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeAI.dart';
 import 'package:smartnote/services/transcribe.dart';
@@ -151,7 +152,7 @@ class _RecorderState extends State<Recorder> {
     return Scaffold(
       appBar: AppBar(
         // title: Text('Recorder'),
-        title: user != null ? Text('Record ${user!.email}') : Text('Record'),
+        title: Text('Record'),
         centerTitle: true,
         backgroundColor: themeColor,
         elevation: 0.0,
@@ -174,21 +175,21 @@ class _RecorderState extends State<Recorder> {
                 print(e);
               }
             },
-            icon: user != null ? 
-            // add avatar that displays the first letter of the user's name
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Text(
-                user!.displayName!.substring(0, 1).toUpperCase(),
-                style: TextStyle(
-                  color: themeColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ) 
-            
-             : Icon(Icons.login),
+            icon: user != null
+                ?
+                // add avatar that displays the first letter of the user's name
+                CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Text(
+                      user!.displayName!.substring(0, 1).toUpperCase(),
+                      style: TextStyle(
+                        color: themeColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                : Icon(Icons.login),
           ),
         ],
       ),
@@ -352,8 +353,11 @@ class _RecorderState extends State<Recorder> {
                                       });
 
                                       try {
+                                        print(
+                                            "============Transcribing==========");
                                         String value = await transcribeAudio(
                                             pathToRecorded!);
+                                        print("==========transcribing done==========");
                                         String gptResponseText =
                                             await generateNote(value);
                                         if (gptResponseText == '') {
@@ -361,6 +365,8 @@ class _RecorderState extends State<Recorder> {
                                               'Note generation failed');
                                         }
                                         if (gptResponseText == '') {
+                                          print(
+                                              "==========Empty Gpt Response==========");
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
@@ -373,8 +379,22 @@ class _RecorderState extends State<Recorder> {
                                               'Note generation failed');
                                         }
 
-                                        final saveStatus = saveNoteAndQuestion(
-                                            gptResponseText);
+                                        // if user is logged in call cloud saveNoteAndQuestion function
+                                        int saveStatus = 0;
+                                        if (user != null) {
+                                          print(
+                                              "==========Saving to cloud==========");
+                                          saveStatus =
+                                              await supabaseSaveNoteAndQuestion(
+                                                  gptResponseText);
+                                        } else {
+                                          print(
+                                              "==========Saving to local==========");
+                                          saveStatus =
+                                              await localSaveNoteAndQuestion(
+                                                  gptResponseText);
+                                        }
+
                                         if (saveStatus == 0) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
