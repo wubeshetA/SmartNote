@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smartnote/theme.dart';
 
 // create a stateless widget call Flash card with constructor text
 class QuestionFlashCard extends StatelessWidget {
@@ -10,6 +11,12 @@ class QuestionFlashCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        // clipBehavior: Clip.antiAlias,
+        
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: themeColor,
       elevation: 4,
       child: Center(
           child: Padding(
@@ -17,9 +24,8 @@ class QuestionFlashCard extends StatelessWidget {
         child: Text(
           '${index + 1}. ${this.text}',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, color: Colors.black
-              // fontWeight: FontWeight.bold
-              ),
+          style: themeFontFamily.copyWith(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
       )),
     );
@@ -32,19 +38,31 @@ class AnswerFlashCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Text(
-          this.text,
-          textAlign: TextAlign.start,
-          style: TextStyle(fontSize: 20, color: Colors.green,
-              fontWeight: FontWeight.bold
-              ),
+    return Container(
+      // give this container a border
+      
+      child: Card(
+        borderOnForeground: true,
+        shape: RoundedRectangleBorder(
+          // clipBehavior: Clip.antiAlias,
+          
+          borderRadius: BorderRadius.circular(10),
         ),
-      )),
+        color: Colors.white,
+        elevation: 4,
+        child: Center(
+          
+            child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            this.text,
+            textAlign: TextAlign.start,
+            style: themeFontFamily.copyWith(
+                      color: themeColor,
+                      fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        )),
+      ),
     );
   }
 }

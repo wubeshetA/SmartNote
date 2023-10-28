@@ -5,12 +5,10 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/questions_list.dart';
 
-// Local imports
-import 'note/note_view.dart';
-import 'recorder/recorder_screen.dart';
-import 'note/notes_list.dart';
-import 'question/question_view.dart';
-import 'upload.dart';
+
+import '../recorder/recorder_screen.dart';
+import '../note/notes_list.dart';
+import '../upload.dart';
 
 class BottomNavBarNavigator extends StatefulWidget {
   const BottomNavBarNavigator({Key? key}) : super(key: key);
@@ -49,18 +47,38 @@ class _BottomNavBarNavigatorState extends State<BottomNavBarNavigator> {
               GButton(
                 icon: Icons.mic,
                 text: 'Record',
+                textStyle: themeFontFamily.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
               ),
               GButton(
                 icon: Icons.file_upload,
                 text: 'Upload',
+                textStyle: themeFontFamily.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
               ),
               GButton(
                 icon: Icons.note,
                 text: 'Notes',
+                textStyle: themeFontFamily.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
               ),
               GButton(
                 icon: Icons.question_answer,
                 text: 'Questions',
+                textStyle: themeFontFamily.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                ),
               ),
             ],
             selectedIndex: _selectedIndex,

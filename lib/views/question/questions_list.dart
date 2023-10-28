@@ -109,11 +109,9 @@ class _QuestionsState extends State<Questions> {
                                   },
                                   child: Text(
                                     data.title,
-                                    style: TextStyle(
-                                      // Added TextStyle for custom font styling
-                                      fontSize: 18,
-
-                                      // fontWeight: FontWeight.,
+                                    style:  themeFontFamily.copyWith(
+                                      fontSize: 18
+                                      // fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -121,11 +119,10 @@ class _QuestionsState extends State<Questions> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     data.created_at.toString(),
-                                    style: TextStyle(
-                                      // Added TextStyle for custom font styling
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
-                                    ),
+                                    style: themeFontFamily.copyWith(
+                                        fontSize: 14,
+                                        color: Colors.grey[600]
+                                    )
                                   ),
                                 ),
                                 trailing: GestureDetector(

@@ -54,8 +54,11 @@ class _NotesState extends State<Notes> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+  
         appBar: SmartNoteAppBar(appBarTitle: "Your Notes"),
         body: FutureBuilder<List<DataNote>>(
+
+        
           future: all_data,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -102,11 +105,9 @@ class _NotesState extends State<Notes> {
                                   },
                                   child: Text(
                                     data.title,
-                                    style: TextStyle(
-                                      // Added TextStyle for custom font styling
-                                      fontSize: 18,
-
-                                      // fontWeight: FontWeight.,
+                                    style: themeFontFamily.copyWith(
+                                      fontSize: 18
+                                      // fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
@@ -114,11 +115,10 @@ class _NotesState extends State<Notes> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     data.created_at.toString(),
-                                    style: TextStyle(
-                                      // Added TextStyle for custom font styling
-                                      fontSize: 14,
-                                      color: Colors.grey[700],
-                                    ),
+                                    style: themeFontFamily.copyWith(
+                                        fontSize: 14,
+                                        color: Colors.grey[600]
+                                    )
                                   ),
                                 ),
                                 trailing: GestureDetector(

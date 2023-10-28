@@ -55,7 +55,8 @@ Future<String> generateNote(String transcribedRawText) async {
   };
 
   var body = jsonEncode({
-    'model': 'gpt-3.5-turbo',
+    // 'model': 'gpt-3.5-turbo',
+    'model': 'gpt-4',
     'messages': [
       {
         'role': 'system',

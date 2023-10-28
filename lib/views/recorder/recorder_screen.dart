@@ -29,7 +29,7 @@ class _RecorderState extends State<Recorder> {
   bool _isRecording = false;
   bool _isPaused = false;
   String? pathToRecorded;
-  Duration _duration = Duration();
+  Duration _duration = const Duration();
   Timer? _timer;
 
   String transcribedText = 'No trascription yet...';
@@ -60,9 +60,9 @@ class _RecorderState extends State<Recorder> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        _duration += Duration(seconds: 1);
+        _duration += const Duration(seconds: 1);
       });
     });
   }
@@ -74,7 +74,7 @@ class _RecorderState extends State<Recorder> {
   void _resetTimer() {
     _timer?.cancel();
     setState(() {
-      _duration = Duration();
+      _duration = const Duration();
     });
   }
 
@@ -151,7 +151,7 @@ class _RecorderState extends State<Recorder> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
     return Scaffold(
-      appBar: SmartNoteAppBar(appBarTitle: "Record Your Lecture"),
+      appBar: const SmartNoteAppBar(appBarTitle: "Record Your Lecture"),
       body: Stack(
         children: [
           Padding(
@@ -164,24 +164,27 @@ class _RecorderState extends State<Recorder> {
                     // SizedBox(height: 25),
                     Text(
                       '${_duration.inHours}:${(_duration.inMinutes % 60).toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                      style: TextStyle(fontSize: 32),
+                      style: themeFontFamily.copyWith(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       _isPaused
-                          ? Icon(
+                          ? const Icon(
                               // add circular dot icon
                               Icons.circle,
                               color: Colors.green,
                             )
                           : _isRecording
-                              ? Icon(
+                              ? const Icon(
                                   // add circular dot icon
                                   Icons.circle,
                                   color: Colors.red,
                                 )
                               : Container(),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
@@ -190,10 +193,10 @@ class _RecorderState extends State<Recorder> {
                             : _isRecording
                                 ? 'Recording...'
                                 : '',
-                        style: TextStyle(
-                          // color: Colors.red,
+                        style: themeFontFamily.copyWith(
                           fontSize: 20,
-                        ),
+                          fontWeight: FontWeight.bold,
+                        )
                       ),
                     ]),
                   ]),
@@ -218,7 +221,7 @@ class _RecorderState extends State<Recorder> {
                                           color: themeColor.withOpacity(0.7),
                                           spreadRadius: 1,
                                           blurRadius: 3,
-                                          offset: Offset(0,
+                                          offset: const Offset(0,
                                               3), // changes position of shadow
                                         ),
                                       ],
@@ -253,11 +256,11 @@ class _RecorderState extends State<Recorder> {
                                 animate: !_isPaused && _isRecording,
                                 glowColor: themeColor,
                                 endRadius: 100.0, // Adjust the glow size
-                                duration: Duration(milliseconds: 2000),
+                                duration: const Duration(milliseconds: 2000),
                                 repeatPauseDuration:
-                                    Duration(milliseconds: 100),
+                                    const Duration(milliseconds: 100),
                                 repeat: true,
-                                child: CircleAvatar(
+                                child: const CircleAvatar(
                                   backgroundColor: themeColor,
                                   radius: 60, // Increase the avatar radius
                                   child: Column(
@@ -287,7 +290,7 @@ class _RecorderState extends State<Recorder> {
                                           color: themeColor.withOpacity(0.5),
                                           spreadRadius: 1,
                                           blurRadius: 3,
-                                          offset: Offset(0,
+                                          offset: const Offset(0,
                                               3), // changes position of shadow
                                         ),
                                       ],
@@ -297,7 +300,7 @@ class _RecorderState extends State<Recorder> {
                                     child: IconButton(
                                       onPressed:
                                           _isRecording ? _stopRecording : null,
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.stop,
                                         color: themeColor,
                                         size: 30,
@@ -308,7 +311,7 @@ class _RecorderState extends State<Recorder> {
                           ],
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         // ======================= Generate Note ================
@@ -317,8 +320,8 @@ class _RecorderState extends State<Recorder> {
                           // Add decoration
                           style: ElevatedButton.styleFrom(
                             // set with of 80% of it's container
-                            minimumSize: Size(300, 50),
-                            maximumSize: Size(600, 100),
+                            minimumSize: const Size(300, 50),
+                            maximumSize: const Size(600, 100),
                             foregroundColor: textColor,
                             backgroundColor: themeColor,
                             shape: RoundedRectangleBorder(
@@ -341,6 +344,8 @@ class _RecorderState extends State<Recorder> {
                                             "============Transcribing==========");
                                         String value = await transcribeAudio(
                                             pathToRecorded!);
+
+                                        print(value);
                                         print(
                                             "==========transcribing done==========");
                                         String gptResponseText =
@@ -354,7 +359,7 @@ class _RecorderState extends State<Recorder> {
                                               "==========Empty Gpt Response==========");
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            SnackBar(
+                                            const SnackBar(
                                               backgroundColor: themeColor,
                                               content: Text(
                                                   'Could\'t generate note!'),
@@ -383,7 +388,7 @@ class _RecorderState extends State<Recorder> {
                                         if (saveStatus == 0) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            SnackBar(
+                                            const SnackBar(
                                               backgroundColor: themeColor,
                                               content: Text(
                                                   'Could\'t save note. Please regenerate note!'),
@@ -395,7 +400,7 @@ class _RecorderState extends State<Recorder> {
 
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             backgroundColor: themeColor,
                                             content: Text(
                                                 'Note has been generated successfully!'),
@@ -406,7 +411,7 @@ class _RecorderState extends State<Recorder> {
                                             .showSnackBar(
                                           SnackBar(
                                             backgroundColor: Colors.red[700],
-                                            content: Text(
+                                            content: const Text(
                                                 'Couldn\'t generate note!'),
                                           ),
                                         );
@@ -419,12 +424,10 @@ class _RecorderState extends State<Recorder> {
                                         });
                                       }
                                     },
-                          child: Text(
+                          child:  Text(
                             'Generate Short Note',
-                            style: TextStyle(
-                              // give it a font size
-                              fontSize: 18,
-                            ),
+                            style: themeFontFamily.copyWith(
+                                fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ]),
@@ -471,8 +474,8 @@ class _RecorderState extends State<Recorder> {
           if (_isGeneratingNote)
             Container(
               color: Colors.black.withOpacity(0.6),
-              child: Center(
-                child: const Column(
+              child: const Center(
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     // add
@@ -489,7 +492,7 @@ class _RecorderState extends State<Recorder> {
                         ),
                       ),
                       SizedBox(height: 50),
-                      const CircularProgressIndicator(
+                      CircularProgressIndicator(
                         color: Colors.white,
                       ),
 

@@ -80,7 +80,11 @@ class _QuestionViewState extends State<QuestionView> {
               collapsedIconColor: Colors.black,
               collapsedTextColor: Colors.black,
               tilePadding: EdgeInsets.all(16), // Add some padding to the title
-              title: Text("${index + 1}. ${question.question}"),
+              title: Text(
+                "${index + 1}. ${question.question}",
+                style: themeFontFamily.copyWith(
+                    fontSize: 18, fontWeight: FontWeight.normal),
+              ),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -89,17 +93,19 @@ class _QuestionViewState extends State<QuestionView> {
                         CrossAxisAlignment.start, // Aligns text to the left
                     children: [
                       Text("Answer:",
-                          style: TextStyle(
+                          style: themeFontFamily.copyWith(
+                              fontSize: 18,
                               color: Colors.black,
-                              fontWeight: FontWeight
-                                  .bold)), // Made the "Answer:" text bold for better visual distinction
+                              fontWeight: FontWeight.bold)
+                          ),
                       SizedBox(height: 15.0),
                       Text(question.answer,
-                          style: TextStyle(
-                              color: Colors.green,
+                          style: themeFontFamily.copyWith(
                               fontSize: 18,
-                              fontWeight: FontWeight
-                                  .bold)), // Assuming 'question' is defined in this scope
+                              color: Colors.green[900],
+                              fontWeight: FontWeight.bold)
+                          )
+
                     ],
                   ),
                 ),
@@ -136,14 +142,19 @@ class _QuestionViewState extends State<QuestionView> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               OutlinedButton.icon(
+                
                 onPressed: () {
                   previousFlashCard();
                 },
                 label: Text(
                   'Previous',
-                  style: TextStyle(color: themeColor, fontSize: 18),
-                ),
-                icon: Icon(Icons.chevron_left_rounded),
+                  style: themeFontFamily.copyWith(
+                    color: themeColor,
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+                
+                icon: Icon(Icons.chevron_left_rounded,
+                color: themeColor,),
               ),
               OutlinedButton.icon(
                 onPressed: () {
@@ -152,9 +163,11 @@ class _QuestionViewState extends State<QuestionView> {
                 label: Text(
                   'Next',
                   // add text color
-                  style: TextStyle(color: themeColor, fontSize: 18),
+                  style: themeFontFamily.copyWith(
+                    color: themeColor,
+                    fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                icon: Icon(Icons.chevron_right_rounded),
+                icon: Icon(Icons.chevron_right_rounded, color: themeColor,),
                 // add decoration
               ),
             ],

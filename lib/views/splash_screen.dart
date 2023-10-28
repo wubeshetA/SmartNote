@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               child: Text(
-                'Your AI-powered note-taking companion!',
+                'Your AI-powered Note-taking Companion!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -51,7 +51,7 @@ class SplashScreen extends StatelessWidget {
                 Navigator.pushNamed(context, '/main');
               },
               child: Text(
-                'Continue',
+                'Continue As Guest',
                 style: TextStyle(fontSize: 18),
               ),
               style: ElevatedButton.styleFrom(

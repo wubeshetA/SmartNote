@@ -12,7 +12,7 @@ import 'package:smartnote/views/auth/signup_page.dart';
 import 'package:smartnote/views/profile.dart';
 import 'package:smartnote/views/splash_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as Supabase;
-import 'views/bottom_navigator.dart';
+import 'views/widgets/bottom_navigator.dart';
 import 'views/note/note_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
