@@ -60,6 +60,7 @@ dependencies:
   google_sign_in: ^6.1.5
   firebase_app_check: ^0.2.1+2
   supabase_flutter: ^1.10.23
+  dotted_border: ^2.1.0
   # firebase_app_check: ^0.2.1+2
 
 dev_dependencies:
