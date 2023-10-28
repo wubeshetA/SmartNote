@@ -73,7 +73,7 @@ class _UploadPageState extends State<Upload> {
                         child: DottedBorder(
                           // You'll need the dotted_border package
                           child: Padding(
-                            padding: const EdgeInsets.all(100.0),
+                            padding: const EdgeInsets.all(90.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
