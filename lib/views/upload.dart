@@ -1,5 +1,6 @@
 // Create a stateful widget that can just display helloworld
 import 'package:flutter/material.dart';
+import 'package:smartnote/views/widgets/appbar.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -11,8 +12,11 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('This section is under development!'),
+    return Scaffold(
+      appBar: SmartNoteAppBar(appBarTitle: "Upload Local Recordings"),
+      body: Center(
+        child: Text("Upload"),
+      ),
     );
   }
 }

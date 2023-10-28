@@ -8,6 +8,7 @@ import 'package:smartnote/views/note/note_view.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:smartnote/views/question/question_view.dart';
+import 'package:smartnote/views/widgets/appbar.dart';
 
 class Questions extends StatefulWidget {
   const Questions({Key? key}) : super(key: key);
@@ -60,21 +61,7 @@ class _QuestionsState extends State<Questions> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Questions'),
-          backgroundColor: themeColor,
-          centerTitle: true,
-          // leading: IconButton(
-          //   //icon: Icon(Icons.arrow_back),
-          //   onPressed: () => Navigator.pop(context),
-          // ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.login),
-            ),
-          ],
-        ),
+        appBar: SmartNoteAppBar(appBarTitle: "Curated Questions"),
         body: FutureBuilder<List<DataNote>>(
           future: all_data,
           builder: (context, snapshot) {

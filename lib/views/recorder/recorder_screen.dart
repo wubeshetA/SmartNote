@@ -13,6 +13,7 @@ import 'package:smartnote/services/storage/local/local_storage.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeAI.dart';
 import 'package:smartnote/services/transcribe.dart';
+import 'package:smartnote/views/widgets/appbar.dart';
 
 class Recorder extends StatefulWidget {
   // intialize constant constructor
@@ -150,49 +151,7 @@ class _RecorderState extends State<Recorder> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
     return Scaffold(
-      appBar: AppBar(
-        // title: Text('Recorder'),
-        title: Text('Record'),
-        centerTitle: true,
-        backgroundColor: themeColor,
-        elevation: 0.0,
-        // add a sign in button on the right side
-        actions: [
-          IconButton(
-            onPressed: () {
-              // Navigate to the SplashScreen
-              // remove the current navigated screen
-              try {
-                // await authService.signOut();
-                // Navigator.pop(context);
-                if (user == null) {
-                  Navigator.pushNamed(context, '/login');
-                  // return;
-                } else {
-                  Navigator.pushNamed(context, '/profile');
-                }
-              } catch (e) {
-                print(e);
-              }
-            },
-            icon: user != null
-                ?
-                // add avatar that displays the first letter of the user's name
-                CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Text(
-                      user!.displayName!.substring(0, 1).toUpperCase(),
-                      style: TextStyle(
-                        color: themeColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                : Icon(Icons.login),
-          ),
-        ],
-      ),
+      appBar: SmartNoteAppBar(appBarTitle: "Recorder"),
       body: Stack(
         children: [
           Padding(

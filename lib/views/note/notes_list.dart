@@ -5,6 +5,7 @@ import 'package:smartnote/services/storage/cloud/database_helper.dart';
 import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/question_view.dart';
+import 'package:smartnote/views/widgets/appbar.dart';
 
 import 'note_view.dart';
 
@@ -53,23 +54,7 @@ class _NotesState extends State<Notes> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Notes',
-          ),
-          backgroundColor: themeColor,
-          centerTitle: true,
-          // leading: IconButton(
-          //   icon: Icon(Icons.arrow_back),
-          //   onPressed: () => Navigator.pop(context),
-          // ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.login),
-            ),
-          ],
-        ),
+        appBar: SmartNoteAppBar(appBarTitle: "Your Notes"),
         body: FutureBuilder<List<DataNote>>(
           future: all_data,
           builder: (context, snapshot) {
