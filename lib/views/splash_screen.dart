@@ -12,19 +12,24 @@ class SplashScreen extends StatelessWidget {
           children: [
             Image.asset(
               'assets/logo_white_bg_blue.png',
-               // replace with the actual logo path
+              // replace with the actual logo path
               height: 150,
               width: 150,
             ),
             SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Text(
-                'Your AI-powered Note-taking Companion!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  color: themeColor,
+              padding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 20, right: 20),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Your AI-powered Note-taking and Study Companion!',
+                  textAlign: TextAlign.center,
+                  style: themeFontFamily.copyWith(
+                    fontSize: 20,
+                    color: themeColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -36,7 +41,7 @@ class SplashScreen extends StatelessWidget {
               },
               child: Text(
                 'Sign In',
-                style: TextStyle(fontSize: 18),
+                style: themeFontFamily.copyWith(fontSize: 18),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: themeColor,
@@ -45,14 +50,14 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 15),
-           ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 // Navigate to the Sign In screen
                 Navigator.pushNamed(context, '/main');
               },
               child: Text(
                 'Continue As Guest',
-                style: TextStyle(fontSize: 18),
+                style: themeFontFamily.copyWith(fontSize: 18),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: themeColor,

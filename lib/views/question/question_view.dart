@@ -180,14 +180,20 @@ class _QuestionViewState extends State<QuestionView> {
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        title: Text('${widget.topicTitle}'),
-        backgroundColor: themeColor,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // elevation: 0.0,
+        // title: Text('${widget.topicTitle}'),
+        // backgroundColor: themeColor,
+        // centerTitle: true,
+        
+
+           title: Text(widget.topicTitle.trim(),
+          style: themeFontFamily.copyWith(
+              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+      centerTitle: true,
+      backgroundColor: themeColor,
+      elevation: 0.0,
+
+
         actions: [
           IconButton(
             onPressed: () {
@@ -196,13 +202,11 @@ class _QuestionViewState extends State<QuestionView> {
               });
             },
             icon: showDefaultView
-                ? Icon(Icons.view_agenda)
-                : Icon(Icons.view_carousel),
+                ? Icon(Icons.view_agenda,
+                size: 30,)
+                : Icon(Icons.view_carousel, size: 30,),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.login),
-          ),
+        
         ],
       ),
       body: showDefaultView ? _defaultView() : _flashCardView());

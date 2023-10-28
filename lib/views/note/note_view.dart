@@ -8,10 +8,7 @@ import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 class NoteView extends StatefulWidget {
-
-  
   final String htmlFilePath;
   final String topicTitle;
   const NoteView(
@@ -23,9 +20,9 @@ class NoteView extends StatefulWidget {
 }
 
 class _NoteViewState extends State<NoteView> {
-
   User? user = FirebaseAuth.instance.currentUser;
   late WebViewController controller;
+  
   bool isControllerInitialized = false;
 
   Future<String> loadHtmlFromFile(String filePath) async {
@@ -35,18 +32,16 @@ class _NoteViewState extends State<NoteView> {
 
   // load html content from url
 
-
   Future<void> setupWebviewContent() async {
     final htmlContent;
 
     if (user != null) {
       htmlContent = await fetchContentFromUrl(Uri.parse(widget.htmlFilePath));
-    controller.loadHtmlString(htmlContent.toString());
+      controller.loadHtmlString(htmlContent.toString());
     } else {
       htmlContent = await loadHtmlFromFile(widget.htmlFilePath);
       controller.loadHtmlString(htmlContent);
     }
-
   }
 
   late Future<List<DataNote>> all_data;
@@ -60,15 +55,16 @@ class _NoteViewState extends State<NoteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
         appBar: AppBar(
-          elevation: 0.0,
-          title: Text('${widget.topicTitle}'),
-          backgroundColor: themeColor,
+          title: Text(widget.topicTitle.trim(),
+              style: themeFontFamily.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
-          ),
+          backgroundColor: themeColor,
+          elevation: 0.0,
           actions: [
             IconButton(
               onPressed: () {},
@@ -76,12 +72,16 @@ class _NoteViewState extends State<NoteView> {
             ),
           ],
         ),
-        body: WebViewWidget(controller: controller));
+        body: WebViewWidget(controller: controller,
+
+
+        ));
   }
 
   @override
   void initState() {
     super.initState();
+    
     controller =
         WebViewController(); // Assuming WebViewWidget provides a default constructor
     isControllerInitialized = true;

@@ -95,6 +95,8 @@ class _UploadPageState extends State<Upload> {
                                   print("============Transcribing==========");
                                   String value =
                                       await transcribeAudio(TofilePath!);
+
+                                  print(value);
                                   print(
                                       "==========transcribing done==========");
                                   String gptResponseText =

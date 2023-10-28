@@ -73,6 +73,7 @@ class SmartNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+       themeMode: ThemeMode.dark,
       routes: {
         // '/': (context) => Home(),
         '/note': (context) => NoteView(
