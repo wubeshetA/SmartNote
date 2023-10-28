@@ -32,10 +32,29 @@ class _UploadPageState extends State<Upload> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter Video/Audio URL',
-                      suffixIcon: Icon(Icons.lock),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.info_outline,
+                          color: themeColor), // Info icon in theme color
+                      SizedBox(width: 10), // Spacing between the icon and text
+                      Text(
+                        'Max File Size: 7MB',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: themeColor, // Text in theme color
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5), // Vertical spacing between the two texts
+                  Text(
+                    'Supported audio formats: .m4a, .mp3, .mp4, .aac',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: themeColor, // Text in theme color
                     ),
                   ),
                   Expanded(
@@ -58,7 +77,7 @@ class _UploadPageState extends State<Upload> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.upload_rounded, size: 50),
+                                Icon(Icons.cloud_upload_outlined, size: 50),
                                 Text(TofilePath == null
                                     ? "DRAG A FILE HERE"
                                     : "File Selected: ${TofilePath!.split('/').last}"),
@@ -165,10 +184,10 @@ class _UploadPageState extends State<Upload> {
                                 }
                               },
                     child: Text('Generate Short Note',
-                        style: TextStyle(
-                          // give it a font size
-                          fontSize: 18,
-                        )),
+                        style: themeFontFamily.copyWith(
+                            // give it a font size
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
