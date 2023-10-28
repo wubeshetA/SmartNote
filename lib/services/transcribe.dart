@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:google_speech/google_speech.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 // Transcribe the audio file to text using Google Speech-to-Text
 Future<String> transcribeAudio(String fileName) async {
@@ -8,40 +11,16 @@ Future<String> transcribeAudio(String fileName) async {
 
   // print("=============Inside the transcription=========$fileName===========");
   final audio = File(fileName).readAsBytesSync().toList();
-  print("=============Inside the transcription=========$fileName===========");
-  // print("=============Inside the transcription=========$audio===========");
-  final config = RecognitionConfig(
-      encoding: AudioEncoding.LINEAR16,
-      model: RecognitionModel.basic,
-      enableAutomaticPunctuation: true,
-      sampleRateHertz: 16000,
-      languageCode: 'en-US');
+  final apiKey = dotenv.env['OPENAI_API_KEY']!;
+  var url = Uri.https("api.openai.com", "v1/audio/transcriptions");
+  var request = http.MultipartRequest('POST', url);
+  request.headers.addAll(({"Authorization": "Bearer $apiKey"}));
+  request.fields["model"] = 'whisper-1';
+  request.fields["language"] = "en";
+  request.files.add(await http.MultipartFile.fromPath('file', fileName));
+  var response = await request.send();
+  var newresponse = await http.Response.fromStream(response);
+  final responseData = json.decode(newresponse.body);
 
-  final serviceAccount = ServiceAccount.fromString(
-      '${(await rootBundle.loadString('assets/speech_to_text.json'))}');
-  // Load service account credentials from assets
-
-  // Create speech client
-  final speechToText = SpeechToText.viaServiceAccount(serviceAccount);
-
-  // Recognize speech
-  print("===================calling speechToText.recognize");
-  final response =
-      await speechToText.recognize(config, audio).onError((error, stackTrace) {
-    print("================Error when calling speechToText.recognize");
-    print(error);
-    print("------------------");
-    print(stackTrace);
-
-    throw Exception('Error while transcibing audio');
-  });
-
-  // Return transcribed text
-  final trascribedText = response.results
-      .map((result) => result.alternatives.first.transcript)
-      .join('\n');
-  // print("===================Transcribed Text====================");
-  print(trascribedText);
-
-  return trascribedText;
+  return responseData['text'];
 }
