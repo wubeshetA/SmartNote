@@ -26,7 +26,7 @@ class _UploadPageState extends State<Upload> {
     final user = Provider.of<UserModel?>(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text("WY"),
+          title: Text("Upload"),
           centerTitle: true,
         ),
         body: Stack(
