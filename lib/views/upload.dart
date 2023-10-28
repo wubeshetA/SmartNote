@@ -50,7 +50,7 @@ class _UploadPageState extends State<Upload> {
                   ),
                   SizedBox(height: 5), // Vertical spacing between the two texts
                   Text(
-                    'Supported audio formats: .m4a, .mp3, .mp4, .aac',
+                    'Supported audio formats: .m4a, .mp3, .mp4',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
