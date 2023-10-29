@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
 import 'package:smartnote/services/generativeai.dart';
-import 'package:smartnote/services/storage/cloud/storage_helper.dart';
+import 'package:smartnote/services/storage/cloud/cloud_storage.dart';
 import 'package:smartnote/services/storage/local/local_storage.dart';
 import 'package:smartnote/services/transcribe.dart';
 import 'package:file_picker/file_picker.dart';
@@ -71,16 +71,26 @@ class _UploadPageState extends State<Upload> {
                           }
                         },
                         child: DottedBorder(
-                          // You'll need the dotted_border package
+                          borderType: BorderType.RRect,
+                          radius: Radius.circular(7),
+                          // set the distance between strokes
+                        
                           child: Padding(
                             padding: const EdgeInsets.all(90.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.cloud_upload_outlined, size: 50),
-                                Text(TofilePath == null
-                                    ? "DRAG A FILE HERE"
-                                    : "File Selected: ${TofilePath!.split('/').last}"),
+                                Text(
+                                  TofilePath == null
+                                      ? "Tap to select a file"
+                                      : "File Selected: ${TofilePath!.split('/').last}",
+                                  style: themeFontFamily.copyWith(
+                                    // give it a font size
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

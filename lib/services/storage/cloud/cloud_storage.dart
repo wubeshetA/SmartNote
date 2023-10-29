@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:smartnote/services/helper_function.dart';
 import 'package:smartnote/services/storage/cloud/const.dart';
-import 'package:smartnote/services/storage/cloud/database_helper.dart';
+import 'package:smartnote/services/storage/cloud/cloud_database.dart';
 import 'package:smartnote/services/storage/local/local_storage.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart' as Supabase;
 

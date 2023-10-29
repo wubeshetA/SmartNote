@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
-import 'package:smartnote/services/storage/cloud/storage_helper.dart';
+import 'package:smartnote/services/storage/cloud/cloud_storage.dart';
 import 'package:smartnote/services/storage/local/local_storage.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/services/generativeAI.dart';

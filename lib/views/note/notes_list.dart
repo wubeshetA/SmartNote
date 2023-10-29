@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smartnote/models/noteAndQuestion.dart';
-import 'package:smartnote/services/storage/cloud/database_helper.dart';
+import 'package:smartnote/services/storage/cloud/cloud_database.dart';
 import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/question_view.dart';
