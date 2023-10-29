@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smartnote/models/user.dart';
-import 'package:smartnote/services/auth_services.dart';
+import 'package:smartnote/backend/auth_services.dart';
 import 'package:smartnote/theme.dart';
 
 class LoginPage extends StatefulWidget {

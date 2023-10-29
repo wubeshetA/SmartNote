@@ -2,12 +2,14 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
-import 'package:smartnote/services/generativeai.dart';
-import 'package:smartnote/services/storage/cloud/cloud_storage.dart';
-import 'package:smartnote/services/storage/local/local_storage.dart';
-import 'package:smartnote/services/transcribe.dart';
+import 'package:smartnote/backend/gpt/request.dart';
+import 'package:smartnote/backend/gpt/prompt.dart';
+import 'package:smartnote/backend/storage/cloud/cloud_storage.dart';
+import 'package:smartnote/backend/storage/local/local_storage.dart';
+import 'package:smartnote/backend/transcribe.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:smartnote/theme.dart';
+import 'package:smartnote/views/recordings/response_handler.dart';
 import 'package:smartnote/views/widgets/appbar.dart';
 
 class Upload extends StatefulWidget {
@@ -39,7 +41,7 @@ class _UploadPageState extends State<Upload> {
                           color: themeColor), // Info icon in theme color
                       SizedBox(width: 10), // Spacing between the icon and text
                       Text(
-                        'Max File Size: 7MB',
+                        'Max File Size: 5MB',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -74,7 +76,7 @@ class _UploadPageState extends State<Upload> {
                           borderType: BorderType.RRect,
                           radius: Radius.circular(7),
                           // set the distance between strokes
-                        
+
                           child: Padding(
                             padding: const EdgeInsets.all(90.0),
                             child: Column(
@@ -120,14 +122,14 @@ class _UploadPageState extends State<Upload> {
 
                                 try {
                                   print("============Transcribing==========");
-                                  String value =
+                                  String transcribedText =
                                       await transcribeAudio(TofilePath!);
 
-                                  print(value);
+                                  print(transcribedText);
                                   print(
                                       "==========transcribing done==========");
                                   String gptResponseText =
-                                      await generateNote(value);
+                                      await getResponseFromGPT(transcribedText);
                                   if (gptResponseText == '') {
                                     throw Exception('Note generation failed');
                                   }
@@ -205,16 +207,16 @@ class _UploadPageState extends State<Upload> {
             if (_isGeneratingNote)
               // Loading overlay
               Container(
-                color: Colors.black.withOpacity(0.6),
+                color: Colors.black.withOpacity(0.7),
                 child: const Center(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       // add
                       children: [
-                        SizedBox(height: 200),
+                        SizedBox(height: 300),
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.only(top: 40),
                           child: Text(
                             'Hang tight! Generating your note...',
                             style: TextStyle(

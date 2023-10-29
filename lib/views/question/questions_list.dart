@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smartnote/models/noteAndQuestion.dart';
-import 'package:smartnote/services/storage/cloud/cloud_database.dart';
-import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
+import 'package:smartnote/backend/storage/cloud/cloud_database.dart';
+import 'package:smartnote/backend/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/note/note_view.dart';
 import 'dart:async';
@@ -108,7 +108,7 @@ class _QuestionsState extends State<Questions> {
                                                 )));
                                   },
                                   child: Text(
-                                    data.title,
+                                    data.title.trim(),
                                     style:  themeFontFamily.copyWith(
                                       fontSize: 18
                                       // fontWeight: FontWeight.bold,

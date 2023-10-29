@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smartnote/models/noteAndQuestion.dart';
-import 'package:smartnote/services/helper_function.dart';
-import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
+import 'package:smartnote/backend/helper_function.dart';
+import 'package:smartnote/backend/storage/local/sqlite_db_helper.dart';
 import 'package:smartnote/theme.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

@@ -8,11 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
-import 'package:smartnote/services/storage/cloud/cloud_storage.dart';
-import 'package:smartnote/services/storage/local/local_storage.dart';
+import 'package:smartnote/backend/storage/cloud/cloud_storage.dart';
+import 'package:smartnote/backend/storage/local/local_storage.dart';
 import 'package:smartnote/theme.dart';
-import 'package:smartnote/services/generativeAI.dart';
-import 'package:smartnote/services/transcribe.dart';
+import 'package:smartnote/backend/transcribe.dart';
+import 'package:smartnote/views/recordings/response_handler.dart';
 import 'package:smartnote/views/widgets/appbar.dart';
 
 class Recorder extends StatefulWidget {
@@ -112,6 +112,7 @@ class _RecorderState extends State<Recorder> {
 
   Future<void> _pauseRecording() async {
     await _audioRecorder!.pauseRecorder();
+
     _pauseTimer();
 
     setState(() {
@@ -188,16 +189,15 @@ class _RecorderState extends State<Recorder> {
                         width: 10,
                       ),
                       Text(
-                        _isPaused
-                            ? 'Paused'
-                            : _isRecording
-                                ? 'Recording...'
-                                : '',
-                        style: themeFontFamily.copyWith(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )
-                      ),
+                          _isPaused
+                              ? 'Paused'
+                              : _isRecording
+                                  ? 'Recording...'
+                                  : '',
+                          style: themeFontFamily.copyWith(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ]),
                   ]),
                 ),
@@ -332,24 +332,31 @@ class _RecorderState extends State<Recorder> {
                               _isGeneratingNote // Disable button if note is being generated
                                   ? null
                                   : () async {
+                                      await _audioRecorder!.stopRecorder();
                                       setState(() {
                                         _isGeneratingNote =
                                             true; // Start loading state
+                                      _pauseRecording();
                                         // pause the recording
-                                        _pauseRecording();
                                       });
 
                                       try {
                                         print(
                                             "============Transcribing==========");
-                                        String value = await transcribeAudio(
-                                            pathToRecorded!);
+                                        String transcribedText =
+                                            await transcribeAudio(
+                                                pathToRecorded!);
 
-                                        print(value);
+                                        // print(transcribedText);
+
+                                        debugPrint(transcribedText,
+                                            wrapWidth: 1024);
                                         print(
                                             "==========transcribing done==========");
                                         String gptResponseText =
-                                            await generateNote(value);
+                                            await getResponseFromGPT(
+                                                transcribedText);
+
                                         if (gptResponseText == '') {
                                           throw Exception(
                                               'Note generation failed');
@@ -362,7 +369,7 @@ class _RecorderState extends State<Recorder> {
                                             const SnackBar(
                                               backgroundColor: themeColor,
                                               content: Text(
-                                                  'Could\'t generate note!'),
+                                                  'Could\'t generate note! Please Try again.'),
                                             ),
                                           );
                                           throw Exception(
@@ -424,7 +431,7 @@ class _RecorderState extends State<Recorder> {
                                         });
                                       }
                                     },
-                          child:  Text(
+                          child: Text(
                             'Generate Short Note',
                             style: themeFontFamily.copyWith(
                                 fontSize: 18, fontWeight: FontWeight.bold),

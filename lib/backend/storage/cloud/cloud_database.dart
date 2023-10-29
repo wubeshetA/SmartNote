@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:smartnote/services/helper_function.dart';
-import 'package:smartnote/services/storage/cloud/const.dart';
+import 'package:smartnote/backend/helper_function.dart';
+import 'package:smartnote/backend/storage/cloud/const.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 
 class SupabaseDatabaseHelper {
@@ -19,15 +19,7 @@ class SupabaseDatabaseHelper {
     return 1;
   }
 
-  // Future<int> deletePath(String uid, int id) async {
-  //   dynamic user = _auth.currentUser;
-  //   final response = await supabaseClient
-  //       .from(user!.uid)
-  //       .delete()
-  //       .eq('id', id)
-  //       .then(((value) {
-  //     print("Value: $value");
-  //   }));
+  // delete a path 
 
   //   if (response.error != null) {
   //     print("Error in deleting path: ${response.error}");

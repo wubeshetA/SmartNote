@@ -6,9 +6,9 @@ import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/question/questions_list.dart';
 
 
-import '../audio/recorder_screen.dart';
+import '../recordings/recorder.dart';
 import '../note/notes_list.dart';
-import '../audio/upload.dart';
+import '../recordings/upload.dart';
 
 class BottomNavBarNavigator extends StatefulWidget {
   const BottomNavBarNavigator({Key? key}) : super(key: key);

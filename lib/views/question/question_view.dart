@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smartnote/services/helper_function.dart';
+import 'package:smartnote/backend/helper_function.dart';
 import 'dart:io';
 import 'dart:convert';
 

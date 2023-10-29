@@ -3,7 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:math';
 import 'dart:convert';
 
-import 'package:smartnote/services/storage/local/sqlite_db_helper.dart';
+import 'package:smartnote/backend/storage/local/sqlite_db_helper.dart';
 
 List<String> splitText(String text) {
   try {

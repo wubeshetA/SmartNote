@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartnote/models/user.dart';
-import 'package:smartnote/services/auth_services.dart';
+import 'package:smartnote/backend/auth_services.dart';
 import 'package:smartnote/theme.dart';
 import 'package:smartnote/views/widgets/appbar.dart';
 

@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 Future<String> transcribeAudio(String fileName) async {
   // Load audio
 
-  // print("=============Inside the transcription=========$fileName===========");
+  print("=============Transcribing:  $fileName===========");
   final audio = File(fileName).readAsBytesSync().toList();
   final apiKey = dotenv.env['OPENAI_API_KEY']!;
   var url = Uri.https("api.openai.com", "v1/audio/transcriptions");

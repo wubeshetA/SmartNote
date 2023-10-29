@@ -4,19 +4,21 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:smartnote/services/helper_function.dart';
-import 'package:smartnote/services/storage/cloud/const.dart';
-import 'package:smartnote/services/storage/cloud/cloud_database.dart';
-import 'package:smartnote/services/storage/local/local_storage.dart';
+import 'package:smartnote/backend/helper_function.dart';
+import 'package:smartnote/backend/storage/cloud/const.dart';
+import 'package:smartnote/backend/storage/cloud/cloud_database.dart';
+import 'package:smartnote/backend/storage/local/local_storage.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart' as Supabase;
+
+
+
+
+
 
 Future<int> supabaseSaveNoteAndQuestion(String text) async {
   User? user = FirebaseAuth.instance.currentUser;
 
   final splitedText = splitText(text);
-  if (splitedText.length < 3) {
-    print("ERROR IN SPLITTING TEXT");
-  }
 
   final noteContent = splitedText[0].toString();
   final questionContent = splitedText[1].toString();
