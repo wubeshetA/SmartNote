@@ -39,7 +39,7 @@ void main() {
     expect(find.text('Questions'), findsOneWidget);
   });
 
-  testWidgets('BottomNavBarNavigator changes pages on tab tap',
+  testWidgets('BottomNavBarNavigator changes pages on tap',
       (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -68,10 +68,10 @@ void main() {
     // Verify that the page changes to Questions
     expect(find.text('Questions'), findsOneWidget);
 
-    // Tap on the Recorder tab
+    // Tap on the Record tab
     await tester.tap(find.text('Record'));
     await tester.pumpAndSettle();
-    // Verify that the page changes back to Recorder
+    // Verify that the page changes back to Record
     expect(find.text('Record'), findsOneWidget);
   });
 }
