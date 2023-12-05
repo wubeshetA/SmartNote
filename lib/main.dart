@@ -24,7 +24,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
   // await FirebaseAppCheck.instance.activate(
   //   // webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
 
@@ -39,7 +38,6 @@ void main() async {
 // =============== playground ===============
   // SqliteDatabaseHelper db = SqliteDatabaseHelper();
   // final all_data = await db.getPaths();
-  
 
   // remove database
   // db.deleteAll();
@@ -73,7 +71,7 @@ class SmartNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.dark,
       routes: {
         // '/': (context) => Home(),
         '/note': (context) => NoteView(

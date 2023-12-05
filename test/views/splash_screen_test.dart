@@ -4,7 +4,7 @@ import 'package:smartnote/views/widgets/bottom_navigator.dart';
 import 'package:smartnote/views/splash_screen.dart';
 import 'package:smartnote/views/auth/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import './mock.dart';
+import 'auth/mock.dart';
 
 void main() {
   setupFirebaseAuthMocks();

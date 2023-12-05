@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "226748629083",
-    "project_id": "smart-note-d885d",
-    "storage_bucket": "smart-note-d885d.appspot.com"
+    "project_number": "757712297169",
+    "project_id": "smartnote-c660a",
+    "storage_bucket": "smartnote-c660a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:226748629083:android:f05e7c93443e25e0673f7e",
+        "mobilesdk_app_id": "1:757712297169:android:dd6fabc148dd45bc32b9f0",
         "android_client_info": {
           "package_name": "com.example.smartnote"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "226748629083-0euadfkjutfl7pfperbv85lghj3g17ga.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBZ-ax6rm3MM75f3h83m88sV0OwYacWHno"
+          "current_key": "AIzaSyCi0XYEoxly5G1IQhc7zebuSySIhJjsR8w"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "226748629083-0euadfkjutfl7pfperbv85lghj3g17ga.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "226748629083-5f0vdidc1j0cfnjrgsqn512iv5o7ulsj.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.smartnote"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

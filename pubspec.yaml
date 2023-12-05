@@ -50,7 +50,7 @@ dependencies:
   sqflite: ^2.3.0
   flip_card: ^0.7.0
   google_fonts: ^6.1.0
-  firebase_core: ^2.20.0
+  firebase_core: ^2.24.0
   firebase_auth: ^4.12.0
   firebase_storage: ^11.4.0
   cloud_firestore: ^4.12.0
@@ -62,10 +62,12 @@ dependencies:
   supabase_flutter: ^1.10.23
   dotted_border: ^2.1.0
   # firebase_app_check: ^0.2.1+2
+  storage_client: ^1.5.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.0 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -73,6 +75,10 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  mocktail: ^1.0.1
+  firebase_core_platform_interface: ^5.0.0
+  firebase_auth_mocks: ^0.9.2
+  build_runner: ^2.4.7
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

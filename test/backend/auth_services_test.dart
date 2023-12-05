@@ -94,7 +94,7 @@ void main() async {
     print('Error initializing Firebase: $e');
   }
 
-  group('Tests', () {
+  group('Auth Service Tests', () {
     setUp(() {
       mockAuth = MockFirebaseAuth();
       mockCredential = MockUserCredential();

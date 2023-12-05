@@ -10,11 +10,6 @@ import 'package:smartnote/backend/storage/cloud/cloud_database.dart';
 import 'package:smartnote/backend/storage/local/local_storage.dart';
 // import 'package:supabase_flutter/supabase_flutter.dart' as Supabase;
 
-
-
-
-
-
 Future<int> supabaseSaveNoteAndQuestion(String text) async {
   User? user = FirebaseAuth.instance.currentUser;
 

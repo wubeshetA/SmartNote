@@ -5,6 +5,10 @@ import 'package:smartnote/models/user.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // final FirebaseAuth _auth;
+
+  // AuthService(this._auth);
+
   // Convert Firebase User to UserModel
   UserModel? _fromFirebaseUser(User? user) {
     if (user == null) return null;
