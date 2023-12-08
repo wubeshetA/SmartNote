@@ -14,7 +14,27 @@ class Notes extends StatefulWidget {
 
   @override
   _NotesState createState() => _NotesState();
+
+  Future<List<DataNote>> fetchData(User? user) async {
+    if (user != null) {
+      var supabaseDbHelper = SupabaseDatabaseHelper();
+      List rawList = await supabaseDbHelper.getPaths();
+      return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+    } else {
+      var sqliteDbHelper = SqliteDatabaseHelper();
+      List<Map<String, dynamic>> rawList = await sqliteDbHelper.getPaths();
+      return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+    }
+  }
 }
+
+// Future<void> fetchNotes() async {
+//   final notesList = Notes();
+//   final data = await notesList.fetchData(FirebaseAuth.instance.currentUser);
+
+//   // Use the fetched data here
+//   print(data);
+// }
 
 class _NotesState extends State<Notes> {
   User? user = FirebaseAuth.instance.currentUser;
@@ -54,11 +74,8 @@ class _NotesState extends State<Notes> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-  
         appBar: SmartNoteAppBar(appBarTitle: "Your Notes"),
         body: FutureBuilder<List<DataNote>>(
-
-        
           future: all_data,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -105,21 +122,17 @@ class _NotesState extends State<Notes> {
                                   },
                                   child: Text(
                                     data.title.trim(),
-                                    style: themeFontFamily.copyWith(
-                                      fontSize: 18
-                                      // fontWeight: FontWeight.bold,
-                                    ),
+                                    style: themeFontFamily.copyWith(fontSize: 18
+                                        // fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                                 subtitle: Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    data.created_at.toString().trim(),
-                                    style: themeFontFamily.copyWith(
-                                        fontSize: 14,
-                                        color: Colors.grey[600]
-                                    )
-                                  ),
+                                  child: Text(data.created_at.toString().trim(),
+                                      style: themeFontFamily.copyWith(
+                                          fontSize: 14,
+                                          color: Colors.grey[600])),
                                 ),
                                 trailing: GestureDetector(
                                   onTap: () {

@@ -22,7 +22,7 @@ class NoteView extends StatefulWidget {
 class _NoteViewState extends State<NoteView> {
   User? user = FirebaseAuth.instance.currentUser;
   late WebViewController controller;
-  
+
   bool isControllerInitialized = false;
 
   Future<String> loadHtmlFromFile(String filePath) async {
@@ -55,7 +55,6 @@ class _NoteViewState extends State<NoteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
         appBar: AppBar(
           title: Text(widget.topicTitle.trim(),
               style: themeFontFamily.copyWith(
@@ -72,16 +71,15 @@ class _NoteViewState extends State<NoteView> {
             ),
           ],
         ),
-        body: WebViewWidget(controller: controller,
-
-
+        body: WebViewWidget(
+          controller: controller,
         ));
   }
 
   @override
   void initState() {
     super.initState();
-    
+
     controller =
         WebViewController(); // Assuming WebViewWidget provides a default constructor
     isControllerInitialized = true;

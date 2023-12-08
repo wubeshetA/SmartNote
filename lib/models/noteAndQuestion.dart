@@ -1,11 +1,10 @@
-
 class DataNote {
   final dynamic
       id; // I noticed it was a String in your example, make sure   final intthis is the right type
   final String notes;
   final String questions;
   final String title;
-  final String created_at;
+  final DateTime created_at;
 
   DataNote({
     required this.id,
@@ -21,7 +20,7 @@ class DataNote {
       notes: map['notes'],
       questions: map['questions'],
       title: map['title'],
-      created_at: map['created_at'],
+      created_at: DateTime.parse(map['created_at']),
     );
   }
 }

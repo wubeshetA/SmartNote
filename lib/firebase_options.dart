@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +43,39 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCzZIt07XrRXfbXeny54q_OCDdBXISAHMI',
+    appId: '1:757712297169:web:eccf19277906b9d132b9f0',
+    messagingSenderId: '757712297169',
+    projectId: 'smartnote-c660a',
+    authDomain: 'smartnote-c660a.firebaseapp.com',
+    storageBucket: 'smartnote-c660a.appspot.com',
+    measurementId: 'G-S58KHX8MYD',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBZ-ax6rm3MM75f3h83m88sV0OwYacWHno',
-    appId: '1:226748629083:android:f05e7c93443e25e0673f7e',
-    messagingSenderId: '226748629083',
-    projectId: 'smart-note-d885d',
-    storageBucket: 'smart-note-d885d.appspot.com',
+    apiKey: 'AIzaSyCi0XYEoxly5G1IQhc7zebuSySIhJjsR8w',
+    appId: '1:757712297169:android:dd6fabc148dd45bc32b9f0',
+    messagingSenderId: '757712297169',
+    projectId: 'smartnote-c660a',
+    storageBucket: 'smartnote-c660a.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBwgsWviu_IHZr8qtha8hceBTW8Pw3Y2hs',
+    appId: '1:757712297169:ios:3053bfdc136a0a0b32b9f0',
+    messagingSenderId: '757712297169',
+    projectId: 'smartnote-c660a',
+    storageBucket: 'smartnote-c660a.appspot.com',
+    iosBundleId: 'com.example.smartnote',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBwgsWviu_IHZr8qtha8hceBTW8Pw3Y2hs',
+    appId: '1:757712297169:ios:0bb8d01a5d84721f32b9f0',
+    messagingSenderId: '757712297169',
+    projectId: 'smartnote-c660a',
+    storageBucket: 'smartnote-c660a.appspot.com',
+    iosBundleId: 'com.example.smartnote.RunnerTests',
   );
 }

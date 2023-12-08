@@ -49,13 +49,11 @@ class _QuestionsState extends State<Questions> {
       return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
       // return await supabaseDbHelper.getPaths(user_uid)
       //  var supabaseDbHelper = SupabaseDatabaseHelper();
-    }
-    else {
+    } else {
+      var dbHelper = SqliteDatabaseHelper();
+      List<Map<String, dynamic>> rawList = await dbHelper.getPaths();
 
-    var dbHelper = SqliteDatabaseHelper();
-    List<Map<String, dynamic>> rawList = await dbHelper.getPaths();
-
-    return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
+      return rawList.map((dataMap) => DataNote.fromMap(dataMap)).toList();
     }
   }
 
@@ -109,21 +107,17 @@ class _QuestionsState extends State<Questions> {
                                   },
                                   child: Text(
                                     data.title.trim(),
-                                    style:  themeFontFamily.copyWith(
-                                      fontSize: 18
-                                      // fontWeight: FontWeight.bold,
-                                    ),
+                                    style: themeFontFamily.copyWith(fontSize: 18
+                                        // fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                                 subtitle: Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(
-                                    data.created_at.toString(),
-                                    style: themeFontFamily.copyWith(
-                                        fontSize: 14,
-                                        color: Colors.grey[600]
-                                    )
-                                  ),
+                                  child: Text(data.created_at.toString(),
+                                      style: themeFontFamily.copyWith(
+                                          fontSize: 14,
+                                          color: Colors.grey[600])),
                                 ),
                                 trailing: GestureDetector(
                                   onTap: () {

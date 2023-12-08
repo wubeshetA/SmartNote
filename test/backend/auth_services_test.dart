@@ -75,6 +75,13 @@ class MockFirebaseAuth extends Mock implements FirebaseAuth {
       super.noSuchMethod(
           Invocation.method(#createUserWithEmailAndPassword, [email, password]),
           returnValue: Future.value(MockUserCredential()));
+
+  @override
+  Stream<User> authStateChanges() {
+    return Stream.fromIterable([
+      MockFirebaseUser(),
+    ]);
+  }
 }
 
 void main() async {
